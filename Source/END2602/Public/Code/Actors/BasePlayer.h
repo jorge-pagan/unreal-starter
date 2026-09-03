@@ -4,15 +4,34 @@
 
 #include "CoreMinimal.h"
 #include "Code/Actors/BaseCharacter.h"
+#include "Both/PlayerHUD.h"
+
 #include "BasePlayer.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class END2602_API ABasePlayer : public ABaseCharacter
 {
 	GENERATED_BODY()
+
+private:
+	void InputAxisMoveForward(float AxisValue);
+	void InputAxisStrafe(float AxisValue);
+
+	void Fire();
+
+protected:
+	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;
+	UPROPERTY(EditDefaultsOnly, Category = Character) FVector SpringArmRelativeLocation;
+	UPROPERTY(EditDefaultsOnly, Category = Character) float TargetArmLength;
+	UPROPERTY(VisibleAnywhere, Category = Character) class UCameraComponent* Camera;
+	UPROPERTY(EditAnywhere, Category = HUD) TSubclassOf<UUserWidget> HUDClass;
+	UPROPERTY(VisibleAnywhere, Category = HUD) UPlayerHUD* HUDObject;
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 
 public:
 	ABasePlayer();
@@ -20,11 +39,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-protected:
-	UPROPERTY(Category = Character, VisibleAnywhere)
-	class USpringArmComponent* SpringArm;
+	virtual FRotator GetBaseAimRotation() const override;
 
-private:
-	UFUNCTION()
-	void InputAxisMoveForward(float AxisValue);
 };

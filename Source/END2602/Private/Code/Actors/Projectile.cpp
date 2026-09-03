@@ -4,55 +4,61 @@
 #include "Code/Actors/Projectile.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "UObject/ConstructorHelpers.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Engine/DamageEvents.h"
 #include "../END2602.h"
 
 // Sets default values
-AProjectile::AProjectile() : Size(1.0f, 1.0f,1.0f)
+AProjectile::AProjectile() : ProjectileDespawnDelay(3.f), CollisionRelativeScale(FVector(0.18, 0.18, 0.18)),
+SphereSize(FVector(0.6, 0.6, 0.6)), Damage(1.f)
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
+	// Sphere Collision Setup
 	SphereCollision = CreateDefaultSubobject<USphereComponent>("SphereCollision");
 	SetRootComponent(SphereCollision);
-	SphereCollision->SetWorldScale3D(Size);
+	SphereCollision->OnComponentBeginOverlap.AddDynamic(this, &AProjectile::HandleOverlap);
+	SphereCollision->SetRelativeScale3D(CollisionRelativeScale);
 
+
+	// Sphere Mesh Setup
 	SphereMesh = CreateDefaultSubobject<UStaticMeshComponent>("SphereMesh");
 	SphereMesh->SetCollisionProfileName("NoCollision");
-	SphereMesh-> SetRelativeScale3D(FVector(0.6f,0.6f,0.6f));
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> Asset(TEXT("/Script/Engine.StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
-
-	SphereMesh->SetStaticMesh(Asset.Object);
 	SphereMesh->SetupAttachment(SphereCollision);
+	SphereMesh->SetRelativeScale3D(SphereSize);
 
-	SphereCollision->OnComponentHit.AddDynamic(this, &AProjectile::HandleHit);
-
+	// Projectile Movement Setup
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovement");
-	ProjectileMovement->InitialSpeed = 1900;
-	ProjectileMovement->MaxSpeed = 1900;
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+	ProjectileMovement->InitialSpeed = 1900.f;
+	ProjectileMovement->MaxSpeed = 1900.f;
 }
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (AController* CastedController = Cast<AController>(GetOwner()))
+		OwnerController = CastedController;
+	else
+		UE_LOG(Game, Warning, TEXT("Owner needs to be a controller"));
+
+	FTimerHandle ProjectileTimer;
+	GetWorld()->GetTimerManager().SetTimer(ProjectileTimer, this,
+		&AProjectile::K2_DestroyActor, ProjectileDespawnDelay);
 }
 
-// Called every frame
-void AProjectile::Tick(float DeltaTime)
+// Created a function with the overlap function signature
+void AProjectile::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::Tick(DeltaTime);
+	TSubclassOf<UDamageType> DamageSubclass = TSubclassOf<UDamageType>(UDamageType::StaticClass());
+	FDamageEvent DamageEvent(DamageSubclass);
 
-}
+	OtherActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 
-void AProjectile::HandleHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
-{
-	UE_LOG(Game, Warning, TEXT("Hit was Called"));
-	UE_LOG(Game, Warning, TEXT("Other Actor Name is: %s"), *OtherActor->GetName());
+	UE_LOG(Game, Log, TEXT("Destroyed (Overlap)"));
 	Destroy();
 }
-

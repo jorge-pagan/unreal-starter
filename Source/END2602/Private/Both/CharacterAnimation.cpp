@@ -4,27 +4,60 @@
 #include "Both/CharacterAnimation.h"
 #include "KismetAnimationLibrary.h"
 
+UCharacterAnimation::UCharacterAnimation() : DebugFire(false), DebugHit(false), DebugMuerte(false),
+CurrentMuerteAsset(nullptr), ActionSlotName("Action")
+{
+
+}
+
+void UCharacterAnimation::PreviewWindowUpdate()
+{
+	if (DebugMuerte)
+	{
+		MuerteAnimation();
+		DebugMuerte = false;
+	}
+	else if (DebugHit)
+	{
+		HitAnimation();
+		DebugHit = false;
+	}
+	else if (DebugFire)
+	{
+		FireAnimation();
+		DebugFire = false;
+	}
+}
+
+void UCharacterAnimation::FireAnimation()
+{
+	PlaySlotAnimationAsDynamicMontage(FireAsset, ActionSlotName);
+}
+
+void UCharacterAnimation::HitAnimation()
+{
+	PlaySlotAnimationAsDynamicMontage(HitAsset, ActionSlotName);
+}
+
+void UCharacterAnimation::MuerteAnimation()
+{
+	// The modulo sign prevents Rand from going above Array.Num() - 1!
+	CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
+}
+
 void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 
-	APawn* Pawn = TryGetPawnOwner();
-
-	if (Pawn)
+	if (APawn* pawn = TryGetPawnOwner())
 	{
-		//isValid
-		Velocity = Pawn->GetVelocity().Length();
+		FVector vel = pawn->GetVelocity();
+
+		Speed = vel.Size();
+		Direction = UKismetAnimationLibrary::CalculateDirection(vel, pawn->GetActorRotation());
 	}
-	else
+	else // UE Editor APB Preview Only
 	{
-		//notValid
-
-		//Preview Window
 		PreviewWindowUpdate();
 	}
-}
-
-void UCharacterAnimation::PreviewWindowUpdate_Implementation()
-{
-
 }

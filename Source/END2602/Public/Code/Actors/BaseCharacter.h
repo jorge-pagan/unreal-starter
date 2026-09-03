@@ -4,9 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Both/HealthComponent.h"
+#include "Code/Actors/BaseRifle.h"
+#include "../END2602.h"
+
 #include "BaseCharacter.generated.h"
 
-UCLASS(ABSTRACT)
+UCLASS(Abstract)
 class END2602_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -19,10 +23,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditDefaultsOnly, Category = Default) UChildActorComponent* BaseRifleChildComponent;
+	UPROPERTY(EditDefaultsOnly, Category = Default) ABaseRifle* BaseRifle;
+	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> WeaponClass;
 
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName WeaponSocketName;
+	UPROPERTY(EditDefaultsOnly, Category = Default) UStaticMesh* ProjectileMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
+
+public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
