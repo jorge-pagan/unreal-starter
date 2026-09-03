@@ -43,5 +43,5 @@ public:
 	void HitAnimation();
 
 	UFUNCTION(BlueprintCallable)
-	void MuerteAnimation();
+	void MuerteAnimation(float Percent = 0.f);
 };

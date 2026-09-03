@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "../../Both/CharacterAnimation.h"
 #include "GameFramework/Character.h"
 #include "Both/HealthComponent.h"
 #include "Code/Actors/BaseRifle.h"
@@ -28,9 +29,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> WeaponClass;
 
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName WeaponSocketName;
+
+	UPROPERTY(EditDefaultsOnly, Category = Default) UCharacterAnimation* AnimInstance;
 	UPROPERTY(EditDefaultsOnly, Category = Default) UStaticMesh* ProjectileMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void HandleHurt(float NotUsed);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void HandleMuerte(float NotUsed);
 
 public:
 	// Called to bind functionality to input

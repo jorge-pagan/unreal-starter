@@ -40,6 +40,38 @@ void ABaseCharacter::BeginPlay()
 		UE_LOG(Game, Warning, TEXT("Failed to convert Rifle to \"ABaseRifle\""));
 		return;
 	}
+
+	// Casting AnimInstance to UCharacterAnimation
+	if (UCharacterAnimation* CastedAnimInstance = Cast<UCharacterAnimation>(GetMesh()->GetAnimInstance()))
+	{
+		AnimInstance = CastedAnimInstance;
+		BaseRifle->OnRifleFireDelegate.AddDynamic(AnimInstance, &UCharacterAnimation::FireAnimation);
+	}
+	else
+	{
+		UE_LOG(Game, Warning, TEXT("Failed to convert AnimInstance to \"UCharacterAnimation\""));
+		return;
+	}
+
+	if (HealthComponent)
+	{
+		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);
+		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);
+	}
+}
+
+void ABaseCharacter::HandleHurt(float NotUsed)
+{
+	AnimInstance->HitAnimation();
+}
+
+void ABaseCharacter::HandleMuerte(float NotUsed)
+{
+	AnimInstance->MuerteAnimation();
+
+	SetActorEnableCollision(true);
+	DisableInput(nullptr);
+	BaseRifle->OwnerMuerto();
 }
 
 // Called to bind functionality to input

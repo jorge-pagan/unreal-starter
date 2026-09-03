@@ -39,7 +39,7 @@ void UCharacterAnimation::HitAnimation()
 	PlaySlotAnimationAsDynamicMontage(HitAsset, ActionSlotName);
 }
 
-void UCharacterAnimation::MuerteAnimation()
+void UCharacterAnimation::MuerteAnimation(float Percent)
 {
 	// The modulo sign prevents Rand from going above Array.Num() - 1!
 	CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
