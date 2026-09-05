@@ -6,8 +6,5 @@
 void AAgentController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	if (RunBehaviorTree(BTAsset))
-	{
-		UE_LOG(Game, Warning, TEXT("RunBehaviorTree Success"));
-	}
+	RunBehaviorTree(BTAsset);
 }

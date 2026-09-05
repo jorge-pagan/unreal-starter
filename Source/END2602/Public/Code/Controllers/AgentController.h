@@ -17,8 +17,8 @@ class END2602_API AAgentController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Default) UBehaviorTree* BTAsset;
+private:
+	UPROPERTY(EditDefaultsOnly, Category = Default) UBehaviorTree* BTAsset;
 
 	void OnPossess(APawn* InPawn) override;
 };

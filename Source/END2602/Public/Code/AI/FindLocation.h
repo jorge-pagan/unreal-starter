@@ -23,8 +23,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Default) float Radius;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName KeyName;
 
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
 public:
 	UFindLocation();
-
-	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };
