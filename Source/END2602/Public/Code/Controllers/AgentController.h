@@ -30,5 +30,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName PlayerKey;
 
 	void OnPossess(APawn* InPawn) override;
+
 	UFUNCTION() void HandlePerception(AActor* ActorInView, FAIStimulus Stimulus);
 };
