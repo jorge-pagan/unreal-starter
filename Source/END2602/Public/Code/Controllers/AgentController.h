@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "../END2602.h"
 
 #include "AgentController.generated.h"
