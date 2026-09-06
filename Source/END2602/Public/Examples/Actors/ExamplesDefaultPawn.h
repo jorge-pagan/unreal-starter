@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "ExampleActorWithInterfaces.h"
 #include "ExamplesDefaultPawn.generated.h"
 
 UCLASS()

@@ -4,6 +4,7 @@
 #include "Examples/Actors/ExamplesDefaultPawn.h"
 #include "../END2602.h"
 #include "GameFramework/PlayerInput.h"
+#include "EngineUtils.h" // TActorIterator (GetActorOfClass in Blueprints)
 
 // Sets default values
 AExamplesDefaultPawn::AExamplesDefaultPawn()
@@ -35,6 +36,20 @@ void AExamplesDefaultPawn::BeginPlay()
 	UE_LOG(Game, Error, TEXT("Velocity is %s"), *GetVelocity().ToString());
 
 	UE_LOG(Game, Error, TEXT("It is %s"), true ? TEXT("True") : TEXT("False"));
+
+	for (TActorIterator<AExampleActorWithInterfaces> it(GetWorld()); it; ++it)
+	{
+		Actor = *it;
+		// Don't use UInterface of object for this
+
+		// Use the I version of the interface for attaching to simple functions
+
+		if (IExampleInterfaceOne* I = Cast<IExampleInterfaceOne>(Actor)) // This work because the interface is attached
+		{
+			UE_LOG(Game, Warning, TEXT("I was able to cast the ExampleActorWithInterfaces to our interface type"));
+			I->TestFunction(); // Equivalent to the EnemyAttack interface that should be implemented in C++
+		}
+	}
 }
 
 // Called every frame
