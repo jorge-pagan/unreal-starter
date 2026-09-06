@@ -18,5 +18,10 @@ void AAgent::PostLoad()
 void AAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AAgent::EnemyAttack()
+{
 	BaseRifle->Fire();
+	UE_LOG(Game, Warning, TEXT("I just fired!"));
 }

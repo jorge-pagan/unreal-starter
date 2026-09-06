@@ -37,9 +37,9 @@ void AExamplesDefaultPawn::BeginPlay()
 
 	UE_LOG(Game, Error, TEXT("It is %s"), true ? TEXT("True") : TEXT("False"));
 
-	for (TActorIterator<AExampleActorWithInterfaces> it(GetWorld()); it; ++it)
+	for (TActorIterator<AExampleActorWithInterfaces> It(GetWorld()); It; ++It)
 	{
-		Actor = *it;
+		Actor = *It;
 		// Don't use UInterface of object for this
 
 		// Use the I version of the interface for attaching to simple functions

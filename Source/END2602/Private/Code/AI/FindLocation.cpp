@@ -3,7 +3,7 @@
 
 #include "Code/AI/FindLocation.h"
 
-UFindLocation::UFindLocation() : Radius(300.f), KeyName("Location") {}
+UFindLocation::UFindLocation() : Radius(300.f), KeyName("Location") {} // Default value given to these variables
 
 EBTNodeResult::Type UFindLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {

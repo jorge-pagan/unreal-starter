@@ -26,6 +26,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void TestFunction() override;
-
+	//! INCLUDE THIS INTERFACE COMMENT BLOCK
+	//----------------------------------------------------------------------//
+	// IExampleInterfaceOne
+	//----------------------------------------------------------------------//
+	virtual void TestFunction() override;
 };

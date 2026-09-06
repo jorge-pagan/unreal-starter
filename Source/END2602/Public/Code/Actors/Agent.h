@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Code/Actors/BaseCharacter.h"
+#include "Code/Interfaces/EnemyAttackInterface.h"
 
 #include "Agent.generated.h"
 
@@ -11,7 +12,7 @@
  *
  */
 UCLASS()
-class END2602_API AAgent : public ABaseCharacter
+class END2602_API AAgent : public ABaseCharacter, public IEnemyAttackInterface
 {
 	GENERATED_BODY()
 
@@ -27,5 +28,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) int MaterialIndex;
 
 	void PostLoad() override;
+
+
+	//----------------------------------------------------------------------//
+	// IEnemyAttackInterface
+	//----------------------------------------------------------------------//
+	virtual void EnemyAttack() override;
 
 };

@@ -2,4 +2,22 @@
 
 
 #include "Code/AI/EnemyAttack.h"
+#include "EngineUtils.h"
 
+EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
+	{
+		AActor* Actor = *It;
+
+		if (IEnemyAttackInterface* I = Cast<IEnemyAttackInterface>(Actor))
+		{
+			I->EnemyAttack();
+
+			OwnerComp.RegisterMessageObserver(this, ActionFinishedMessage);
+			return EBTNodeResult::InProgress;
+		}
+	}
+
+	return EBTNodeResult::Failed;
+}

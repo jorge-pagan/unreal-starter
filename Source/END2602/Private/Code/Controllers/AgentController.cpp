@@ -3,7 +3,7 @@
 
 #include "Code/Controllers/AgentController.h"
 
-AAgentController::AAgentController() : PlayerKey("Player") 
+AAgentController::AAgentController() : PlayerKey("Player") // Default value given to the variable
 {
 	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>("AIPerception");
 }
