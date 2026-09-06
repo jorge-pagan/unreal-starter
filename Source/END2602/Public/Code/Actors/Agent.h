@@ -21,17 +21,26 @@ class END2602_API AAgent : public ABaseCharacter, public IEnemyAttackInterface, 
 public:
 	AAgent();
 
-	virtual void Tick(float DeltaTime) override;
+	void UpdateBlackboardHealth(float Ratio);
+
 protected:
 	// Don't forget to set the WeaponClass to BP_CodeBaseRifle in the editor (and not the ABaseRifle class)
 
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName TintName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionStoppedMessage;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName HealthRatioKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
 	UPROPERTY(EditDefaultsOnly, Category = Default) int MaterialIndex;
 
 	void PostLoad() override;
 
+	virtual void BeginPlay() override;
+
+	virtual void HandleHurt(float Ratio) override;
+
+public:
+
+	virtual void Tick(float DeltaTime) override;
 
 	//----------------------------------------------------------------------//
 	// IEnemyAttackInterface
