@@ -3,7 +3,8 @@
 
 #include "Code/Actors/BaseRifle.h"
 #include "Code/Actors/Projectile.h" // Used only to define ProjectileClass in code, otherwise it had to be defined in editor
-#include "UObject/ConstructorHelpers.h"
+#include "Code/Actors/Agent.h"
+#include "EngineUtils.h"
 #include "../END2602.h"
 
 // Sets default values
@@ -31,6 +32,21 @@ void ABaseRifle::BeginPlay()
 	{
 		UE_LOG(Game, Warning, TEXT("Failed to convert parent actor to pawn. Need a pawn to own this rifle."));
 		Destroy();
+	}
+}
+
+void ABaseRifle::ActionStopped()
+{
+	ActionHappening = false;
+
+	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
+	{
+		AActor* Actor = *It;
+
+		if (IActionStoppedInterface* I = Cast<IActionStoppedInterface>(Actor))
+		{
+			I->HandleActionFinished();
+		}
 	}
 }
 

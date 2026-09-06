@@ -15,6 +15,11 @@ void AAgent::PostLoad()
 	GetMesh()->SetVectorParameterValueOnMaterials(TintName, FVector(Color));
 }
 
+void AAgent::HandleActionFinished()
+{
+	FAIMessage::Send(this, FAIMessage(ActionStoppedMessage, this, true));
+}
+
 void AAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -23,5 +28,4 @@ void AAgent::Tick(float DeltaTime)
 void AAgent::EnemyAttack()
 {
 	BaseRifle->Fire();
-	UE_LOG(Game, Warning, TEXT("I just fired!"));
 }

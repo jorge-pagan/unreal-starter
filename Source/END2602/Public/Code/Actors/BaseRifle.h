@@ -20,7 +20,6 @@ public:
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FRifleFireDelegate OnRifleFireDelegate;
 
-
 protected:
 	// Don't forget to set the BaseCharacter's WeaponClass object to BP_CodeBaseRifle in the editor 
 	// (and not the ABaseRifle class)
@@ -37,13 +36,14 @@ protected:
 
 
 private:
+
 	bool Alive = true;
 
 	bool ActionHappening = false;
 
 	inline bool CanShoot() const { return !ActionHappening && Alive; }
 
-	inline void ActionStopped() { ActionHappening = false; }
+	void ActionStopped();
 
 public:
 	FVector GetSource();

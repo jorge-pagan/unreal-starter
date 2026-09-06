@@ -6,6 +6,7 @@
 
 EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
+	Super::ExecuteTask(OwnerComp, NodeMemory);
 	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
 	{
 		AActor* Actor = *It;
@@ -15,9 +16,11 @@ EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 			I->EnemyAttack();
 
 			OwnerComp.RegisterMessageObserver(this, ActionFinishedMessage);
+
 			return EBTNodeResult::InProgress;
 		}
 	}
 
 	return EBTNodeResult::Failed;
 }
+

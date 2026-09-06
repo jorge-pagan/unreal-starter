@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Code/Actors/BaseCharacter.h"
 #include "Code/Interfaces/EnemyAttackInterface.h"
+#include "Code/Interfaces/ActionStoppedInterface.h"
+#include "BrainComponent.h"
 
 #include "Agent.generated.h"
 
@@ -12,7 +14,7 @@
  *
  */
 UCLASS()
-class END2602_API AAgent : public ABaseCharacter, public IEnemyAttackInterface
+class END2602_API AAgent : public ABaseCharacter, public IEnemyAttackInterface, public IActionStoppedInterface
 {
 	GENERATED_BODY()
 
@@ -24,6 +26,7 @@ protected:
 	// Don't forget to set the WeaponClass to BP_CodeBaseRifle in the editor (and not the ABaseRifle class)
 
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName TintName;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionStoppedMessage;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
 	UPROPERTY(EditDefaultsOnly, Category = Default) int MaterialIndex;
 
@@ -35,4 +38,8 @@ protected:
 	//----------------------------------------------------------------------//
 	virtual void EnemyAttack() override;
 
+	//----------------------------------------------------------------------//
+	// IActionStoppedInterface
+	//----------------------------------------------------------------------//
+	virtual void HandleActionFinished() override;
 };
