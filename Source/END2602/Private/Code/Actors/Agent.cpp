@@ -20,7 +20,13 @@ void AAgent::PostLoad()
 void AAgent::UpdateBlackboardHealth(float Ratio)
 {
 	APawn* AgentPawn = Cast<APawn>(this);
-	Cast<AAIController>(AgentPawn->GetController())->GetBlackboardComponent()->SetValueAsFloat(HealthRatioKey, Ratio);
+
+	if (AgentPawn)
+	{
+		AAIController* AIController = Cast<AAIController>(AgentPawn->GetController());
+
+		if (AIController) AIController->GetBlackboardComponent()->SetValueAsFloat(HealthRatioKey, Ratio);
+	}
 }
 
 void AAgent::BeginPlay()

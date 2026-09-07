@@ -28,4 +28,6 @@ void UEnvQueryContextPlayer::ProvideContext(FEnvQueryInstance& QueryInstance, FE
 		}
 	}
 	else UEnvQueryItemType_Actor::SetContextHelper(ContextData, Cast<AActor>(QueryInstance.Owner.Get()));
+
+	// How to return...
 }
