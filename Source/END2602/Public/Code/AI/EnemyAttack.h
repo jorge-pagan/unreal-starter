@@ -20,6 +20,4 @@ private:
 	UPROPERTY(EditAnywhere, Category = Default) FName ActionFinishedMessage;
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
-
 };

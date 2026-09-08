@@ -19,6 +19,7 @@ public:
 	ABaseRifle();
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FRifleFireDelegate OnRifleFireDelegate;
+	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
 
 protected:
 	// Don't forget to set the BaseCharacter's WeaponClass object to BP_CodeBaseRifle in the editor 
@@ -36,6 +37,7 @@ protected:
 
 
 private:
+	UPROPERTY(VisibleAnywhere, Category = Default) float CurrentAmmo;
 
 	bool Alive = true;
 
