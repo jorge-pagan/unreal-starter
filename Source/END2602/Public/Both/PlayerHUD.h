@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 
 #include "PlayerHUD.generated.h"
 
@@ -27,6 +28,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FName ColorName;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FLinearColor SafeColor;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FLinearColor DangerColor;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) UTextBlock* CurrentAmmo;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) UTextBlock* MaxAmmo;
 
 	FCollisionObjectQueryParams ObjectTypes;
 
@@ -41,4 +44,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float Percent);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAmmo(float Current, float Max);
 };

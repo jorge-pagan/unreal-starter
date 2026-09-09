@@ -21,8 +21,8 @@ void UPlayerHUD::PostLoad()
 bool UPlayerHUD::Initialize()
 {
 	bool r = Super::Initialize();
-
 	DynamicMaterial = Crosshair ? Crosshair->GetDynamicMaterial() : nullptr;
+	if (CurrentAmmo && MaxAmmo) UE_LOG(Game, Warning, TEXT("YAY CURRENT AMMO AND MAX AMMO ARE INITIALIZED PROPERLY"));
 	return r;
 }
 
@@ -103,4 +103,10 @@ void UPlayerHUD::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 void UPlayerHUD::SetHealth(float Percent)
 {
 	HealthBar->SetPercent(Percent);
+}
+
+void UPlayerHUD::SetAmmo(float Current, float Max)
+{
+	CurrentAmmo->SetText(FText::AsNumber(Current));
+	MaxAmmo->SetText(FText::AsNumber(Max));
 }

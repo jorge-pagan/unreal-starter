@@ -8,6 +8,7 @@
 #include "BaseRifle.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRifleFireDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChanged, float, Current, float, Max);
 
 UCLASS()
 class END2602_API ABaseRifle : public AActor
@@ -18,7 +19,8 @@ public:
 	
 	ABaseRifle();
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FRifleFireDelegate OnRifleFireDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FRifleFireDelegate OnRifleFireDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
 	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
 
 protected:
@@ -35,6 +37,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	inline void UseAmmo() { CurrentAmmo -= 1.f; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = Default) float CurrentAmmo;
@@ -43,7 +46,9 @@ private:
 
 	bool ActionHappening = false;
 
-	inline bool CanShoot() const { return !ActionHappening && Alive; }
+	inline bool CanShoot() const { return !ActionHappening && Alive && CurrentAmmo > 0.f; }
+
+	inline void ReloadAmmo() { CurrentAmmo = MaxAmmo; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
 
 	void ActionStopped();
 

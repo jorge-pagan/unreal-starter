@@ -41,6 +41,8 @@ void ABasePlayer::BeginPlay()
 
 		HUDObject->AddToViewport();
 
+		BaseRifle->OnAmmoChanged.AddDynamic(HUDObject, &UPlayerHUD::SetAmmo);
+
 		if (HealthComponent)
 		{
 			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);

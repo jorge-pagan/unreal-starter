@@ -27,6 +27,8 @@ void ABaseRifle::BeginPlay()
 	if (APawn* CastedParent = Cast<APawn>(AActor::GetParentActor()))
 	{
 		Parent = CastedParent;
+
+		ReloadAmmo();
 	}
 	else
 	{
@@ -73,6 +75,8 @@ void ABaseRifle::Fire(const FRotator* Direction)
 		SpawnParams.Instigator = Parent;
 
 		GetWorld()->SpawnActor(ProjectileClass, &ActorTransform, SpawnParams);
+
+		UseAmmo();
 
 		OnRifleFireDelegate.Broadcast();
 		UE_LOG(Game, Log, TEXT("Projectile Fired"));
