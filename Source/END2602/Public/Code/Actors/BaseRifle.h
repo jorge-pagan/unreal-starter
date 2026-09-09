@@ -48,14 +48,14 @@ private:
 
 	inline bool CanShoot() const { return !ActionHappening && Alive && CurrentAmmo > 0.f; }
 
-	inline void ReloadAmmo() { CurrentAmmo = MaxAmmo; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
-
 	void ActionStopped();
 
 public:
 	FVector GetSource();
 
 	inline void OwnerMuerto() { Alive = false; }
+
+	inline void ReloadAmmo() { CurrentAmmo = MaxAmmo; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
 
 	void Fire(const FRotator* Direction = nullptr);
 

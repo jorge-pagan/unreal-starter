@@ -27,8 +27,6 @@ void ABaseRifle::BeginPlay()
 	if (APawn* CastedParent = Cast<APawn>(AActor::GetParentActor()))
 	{
 		Parent = CastedParent;
-
-		ReloadAmmo();
 	}
 	else
 	{
