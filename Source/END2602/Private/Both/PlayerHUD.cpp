@@ -22,7 +22,6 @@ bool UPlayerHUD::Initialize()
 {
 	bool r = Super::Initialize();
 	DynamicMaterial = Crosshair ? Crosshair->GetDynamicMaterial() : nullptr;
-	if (CurrentAmmo && MaxAmmo) UE_LOG(Game, Warning, TEXT("YAY CURRENT AMMO AND MAX AMMO ARE INITIALIZED PROPERLY"));
 	return r;
 }
 

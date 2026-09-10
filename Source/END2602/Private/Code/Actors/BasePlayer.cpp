@@ -87,6 +87,9 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	// Attack Binding
 	PlayerInputComponent->BindAction("Attack", EInputEvent::IE_Pressed, this, &ABasePlayer::Fire);
+
+	// Reload Binding
+	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::Reload);
 }
 
 FRotator ABasePlayer::GetBaseAimRotation() const
@@ -98,4 +101,9 @@ void ABasePlayer::Fire()
 {
 	FRotator Direction = GetBaseAimRotation();
 	BaseRifle->Fire(&Direction);
+}
+
+void ABasePlayer::Reload()
+{
+	BaseRifle->ReloadAmmo();
 }

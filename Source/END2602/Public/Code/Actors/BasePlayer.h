@@ -21,6 +21,7 @@ private:
 	void InputAxisStrafe(float AxisValue);
 
 	void Fire();
+	void Reload();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;
