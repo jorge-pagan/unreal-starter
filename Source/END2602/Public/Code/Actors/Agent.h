@@ -20,6 +20,7 @@ class END2602_API AAgent : public ABaseCharacter, public IEnemyBehaviorsInterfac
 public:
 	AAgent();
 
+private:
 	void UpdateBlackboardHealth(float Ratio);
 
 	UFUNCTION()
@@ -42,9 +43,6 @@ protected:
 	virtual void HandleHurt(float Ratio) override;
 
 public:
-
-	virtual void Tick(float DeltaTime) override;
-
 	UFUNCTION()
 	void HandleActionFinished();
 

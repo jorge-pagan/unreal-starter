@@ -8,18 +8,12 @@
 EBTNodeResult::Type UEnemyReload::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
+	if (IEnemyBehaviorsInterface* I = Cast<IEnemyBehaviorsInterface>(OwnerComp.GetAIOwner()->GetPawn()))
 	{
-		AActor* Actor = *It;
+		I->EnemyReload();
+		WaitForMessage(OwnerComp, ActionFinishedMessage);
 
-		if (IEnemyBehaviorsInterface* I = Cast<IEnemyBehaviorsInterface>(Actor))
-		{
-			I->EnemyReload();
-
-			OwnerComp.RegisterMessageObserver(this, ActionFinishedMessage);
-
-			return EBTNodeResult::InProgress;
-		}
+		return EBTNodeResult::InProgress;
 	}
 
 	return EBTNodeResult::Failed;

@@ -50,9 +50,7 @@ FVector ABaseRifle::GetSource()
 void ABaseRifle::ReloadAmmo()
 {
 	CurrentAmmo = MaxAmmo;
-	UE_LOG(Game, Warning, TEXT("Should be broadcasting OnAmmoChanged"));
 	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
-	UE_LOG(Game, Warning, TEXT("Broacasted OnAmmoChanged"));
 }
 
 void ABaseRifle::RequestReload()
@@ -88,6 +86,5 @@ void ABaseRifle::Fire(const FRotator* Direction)
 		UseAmmo();
 
 		OnRifleFireDelegate.Broadcast();
-		UE_LOG(Game, Log, TEXT("Projectile Fired"));
 	}
 }

@@ -7,18 +7,13 @@
 EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
+
+	if (IEnemyBehaviorsInterface* I = Cast<IEnemyBehaviorsInterface>(OwnerComp.GetAIOwner()->GetPawn()))
 	{
-		AActor* Actor = *It;
-
-		if (IEnemyBehaviorsInterface* I = Cast<IEnemyBehaviorsInterface>(Actor))
-		{
-			I->EnemyAttack();
-
-			OwnerComp.RegisterMessageObserver(this, ActionFinishedMessage);
-
-			return EBTNodeResult::InProgress;
-		}
+		I->EnemyAttack();
+		WaitForMessage(OwnerComp, ActionFinishedMessage);
+		
+		return EBTNodeResult::InProgress;
 	}
 
 	return EBTNodeResult::Failed;

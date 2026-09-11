@@ -2,6 +2,9 @@
 
 
 #include "Code/Controllers/AgentController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 // I understand the downsides of hardcoding a value to a variable, but in these instances, I wanted to set a
 // default value to the variable while still retaining the editable benefits from the editor
@@ -12,14 +15,27 @@
 
 AAgentController::AAgentController() : PlayerKey("Player") // Default value given to the variable
 {
-	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>("AIPerception");
+	// All default values
+	UAISenseConfig_Sight* SenseConfig = CreateDefaultSubobject<UAISenseConfig_Sight>("SenseConfig");
+	SenseConfig->Implementation = UAISense_Sight::StaticClass();
+	SenseConfig->SightRadius = 900.f;
+	SenseConfig->LoseSightRadius = 1100.f;
+	SenseConfig->PeripheralVisionAngleDegrees = 45.f;
+	SenseConfig->DetectionByAffiliation.bDetectEnemies = 1;
+	SenseConfig->DetectionByAffiliation.bDetectNeutrals = 1;
+	SenseConfig->DetectionByAffiliation.bDetectFriendlies = 0;
+	SenseConfig->AutoSuccessRangeFromLastSeenLocation = 200.f;
+	SenseConfig->SetStartsEnabled(true);
+	
+	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComponent");
+	PerceptionComponent->ConfigureSense(*SenseConfig);
 }
 
 void AAgentController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &AAgentController::HandlePerception);
+	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAgentController::HandlePerception);
 	RunBehaviorTree(BTAsset);
 }
 
