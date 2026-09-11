@@ -58,7 +58,7 @@ public:
 	inline void OwnerMuerto() { Alive = false; }
 
 	UFUNCTION()
-	inline void ReloadAmmo() { CurrentAmmo = MaxAmmo; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
+	void ReloadAmmo();
 
 	void RequestReload();
 

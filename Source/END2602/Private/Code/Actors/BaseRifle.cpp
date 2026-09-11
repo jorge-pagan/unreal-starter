@@ -47,6 +47,14 @@ FVector ABaseRifle::GetSource()
 	return SkeletalMesh->GetSocketLocation(ProjectileSpawnSocketName);
 }
 
+void ABaseRifle::ReloadAmmo()
+{
+	CurrentAmmo = MaxAmmo;
+	UE_LOG(Game, Warning, TEXT("Should be broadcasting OnAmmoChanged"));
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
+	UE_LOG(Game, Warning, TEXT("Broacasted OnAmmoChanged"));
+}
+
 void ABaseRifle::RequestReload()
 {
 	if (!ActionHappening)

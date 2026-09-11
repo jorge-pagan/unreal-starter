@@ -21,6 +21,8 @@ public:
 	AAgent();
 
 	void UpdateBlackboardHealth(float Ratio);
+
+	UFUNCTION()
 	void UpdateBlackboardAmmo(float Current, float Max);
 
 protected:
@@ -43,10 +45,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void HandleActionFinished();
+
 	//----------------------------------------------------------------------//
-	// IEnemyAttackInterface
+	// IEnemyBehaviorsInterface
 	//----------------------------------------------------------------------//
 	virtual void EnemyAttack() override;
 
-	void HandleActionFinished();
+	virtual void EnemyReload() override;
 };

@@ -31,13 +31,20 @@ void AAgent::UpdateBlackboardHealth(float Ratio)
 
 void AAgent::UpdateBlackboardAmmo(float Current, float Max)
 {
+	UE_LOG(Game, Warning, TEXT("Function entered"));
 	APawn* AgentPawn = Cast<APawn>(this);
 
 	if (AgentPawn)
 	{
+		UE_LOG(Game, Warning, TEXT("Inside if"));
 		AAIController* AIController = Cast<AAIController>(AgentPawn->GetController());
 
-		if (AIController) AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
+		if (AIController)
+		{
+			AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
+
+			UE_LOG(Game, Warning, TEXT("Successfully called function \"UpdateBlackBoardAmmo\" from OnAmmoChanged Broadcast"))
+		}
 	}
 }
 
@@ -48,6 +55,8 @@ void AAgent::BeginPlay()
 	UpdateBlackboardHealth(1.f);
 	
 	BaseRifle->OnActionStopped.AddDynamic(this, &AAgent::HandleActionFinished);
+	BaseRifle->OnAmmoChanged.AddDynamic(this, &AAgent::UpdateBlackboardAmmo);
+	BaseRifle->ReloadAmmo();
 }
 
 void AAgent::HandleHurt(float Ratio)
@@ -64,6 +73,11 @@ void AAgent::HandleActionFinished()
 void AAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AAgent::EnemyReload()
+{
+	BaseRifle->RequestReload();
 }
 
 void AAgent::EnemyAttack()
