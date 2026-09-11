@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "ActionStoppedInterface.generated.h"
+#include "HandleReloadInterface.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UActionStoppedInterface : public UInterface
+class UHandleReloadInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,11 +16,12 @@ class UActionStoppedInterface : public UInterface
 /**
  * 
  */
-class END2602_API IActionStoppedInterface
+class END2602_API IHandleReloadInterface
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void HandleActionFinished() = 0;
+	virtual void HandleReloadEnded() = 0;
+	virtual void HandleReloadNow() = 0;
 };

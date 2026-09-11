@@ -11,7 +11,7 @@ EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	{
 		AActor* Actor = *It;
 
-		if (IEnemyAttackInterface* I = Cast<IEnemyAttackInterface>(Actor))
+		if (IEnemyBehaviorsInterface* I = Cast<IEnemyBehaviorsInterface>(Actor))
 		{
 			I->EnemyAttack();
 
@@ -23,4 +23,3 @@ EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
 	return EBTNodeResult::Failed;
 }
-

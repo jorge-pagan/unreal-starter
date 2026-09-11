@@ -39,20 +39,23 @@ void ABaseRifle::ActionStopped()
 {
 	ActionHappening = false;
 
-	for (TActorIterator<AAgent> It(GetWorld()); It; ++It)
-	{
-		AActor* Actor = *It;
-
-		if (IActionStoppedInterface* I = Cast<IActionStoppedInterface>(Actor))
-		{
-			I->HandleActionFinished();
-		}
-	}
+	OnActionStopped.Broadcast();
 }
 
 FVector ABaseRifle::GetSource()
 {
 	return SkeletalMesh->GetSocketLocation(ProjectileSpawnSocketName);
+}
+
+void ABaseRifle::RequestReload()
+{
+	if (!ActionHappening)
+	{
+		ActionHappening = true;
+
+		// Triggers the animation which eventually changes the data
+		OnReloadStart.Broadcast();
+	}
 }
 
 void ABaseRifle::Fire(const FRotator* Direction)

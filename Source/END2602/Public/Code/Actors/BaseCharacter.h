@@ -35,10 +35,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	virtual void HandleHurt(float NotUsed);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	virtual void HandleMuerte(float NotUsed);
 
 public:

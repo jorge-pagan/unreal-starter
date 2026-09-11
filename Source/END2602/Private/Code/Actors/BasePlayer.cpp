@@ -105,5 +105,5 @@ void ABasePlayer::Fire()
 
 void ABasePlayer::Reload()
 {
-	BaseRifle->ReloadAmmo();
+	BaseRifle->RequestReload();
 }

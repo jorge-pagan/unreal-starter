@@ -4,19 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "EnemyAttackInterface.generated.h"
+#include "EnemyBehaviors.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UEnemyAttackInterface : public UInterface
+class UEnemyBehaviorsInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class END2602_API IEnemyAttackInterface
+
+class END2602_API IEnemyBehaviorsInterface
 {
 	GENERATED_BODY()
 
 public:
 	UFUNCTION() virtual void EnemyAttack() = 0;
+	UFUNCTION() virtual void EnemyReload() = 0;
 };

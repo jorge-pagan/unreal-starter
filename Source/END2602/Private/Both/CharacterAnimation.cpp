@@ -27,6 +27,11 @@ void UCharacterAnimation::PreviewWindowUpdate()
 		FireAnimation();
 		DebugFire = false;
 	}
+	else if (DebugReload)
+	{
+		ReloadAnimation();
+		DebugReload = false;
+	}
 }
 
 void UCharacterAnimation::FireAnimation()
@@ -45,6 +50,11 @@ void UCharacterAnimation::MuerteAnimation(float Percent)
 	CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
 }
 
+void UCharacterAnimation::ReloadAnimation()
+{
+	PlaySlotAnimationAsDynamicMontage(ReloadAsset, ActionSlotName);
+}
+
 void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
@@ -60,4 +70,14 @@ void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 	{
 		PreviewWindowUpdate();
 	}
+}
+
+void UCharacterAnimation::HandleReloadNow()
+{
+	OnReloadNow.Broadcast();
+}
+
+void UCharacterAnimation::HandleReloadEnded()
+{
+	OnReloadEnded.Broadcast();
 }

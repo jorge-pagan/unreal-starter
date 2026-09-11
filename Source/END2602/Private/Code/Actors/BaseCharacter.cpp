@@ -46,6 +46,9 @@ void ABaseCharacter::BeginPlay()
 	{
 		AnimInstance = CastedAnimInstance;
 		BaseRifle->OnRifleFireDelegate.AddDynamic(AnimInstance, &UCharacterAnimation::FireAnimation);
+		BaseRifle->OnReloadStart.AddDynamic(AnimInstance, &UCharacterAnimation::ReloadAnimation);
+		AnimInstance->OnReloadNow.AddDynamic(BaseRifle, &ABaseRifle::ReloadAmmo);
+		AnimInstance->OnReloadEnded.AddDynamic(BaseRifle, &ABaseRifle::ActionStopped);
 	}
 	else
 	{

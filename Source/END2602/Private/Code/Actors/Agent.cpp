@@ -29,11 +29,25 @@ void AAgent::UpdateBlackboardHealth(float Ratio)
 	}
 }
 
+void AAgent::UpdateBlackboardAmmo(float Current, float Max)
+{
+	APawn* AgentPawn = Cast<APawn>(this);
+
+	if (AgentPawn)
+	{
+		AAIController* AIController = Cast<AAIController>(AgentPawn->GetController());
+
+		if (AIController) AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
+	}
+}
+
 void AAgent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	UpdateBlackboardHealth(1.f);
+	
+	BaseRifle->OnActionStopped.AddDynamic(this, &AAgent::HandleActionFinished);
 }
 
 void AAgent::HandleHurt(float Ratio)

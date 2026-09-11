@@ -4,8 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Code/Actors/BaseCharacter.h"
-#include "Code/Interfaces/EnemyAttackInterface.h"
-#include "Code/Interfaces/ActionStoppedInterface.h"
+#include "Code/Interfaces/EnemyBehaviors.h"
 #include "BrainComponent.h"
 
 #include "Agent.generated.h"
@@ -14,7 +13,7 @@
  *
  */
 UCLASS()
-class END2602_API AAgent : public ABaseCharacter, public IEnemyAttackInterface, public IActionStoppedInterface
+class END2602_API AAgent : public ABaseCharacter, public IEnemyBehaviorsInterface
 {
 	GENERATED_BODY()
 
@@ -22,6 +21,7 @@ public:
 	AAgent();
 
 	void UpdateBlackboardHealth(float Ratio);
+	void UpdateBlackboardAmmo(float Current, float Max);
 
 protected:
 	// Don't forget to set the WeaponClass to BP_CodeBaseRifle in the editor (and not the ABaseRifle class)
@@ -29,6 +29,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName TintName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionStoppedMessage;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName HealthRatioKey;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName AmmoKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
 	UPROPERTY(EditDefaultsOnly, Category = Default) int MaterialIndex;
 
@@ -47,8 +48,5 @@ public:
 	//----------------------------------------------------------------------//
 	virtual void EnemyAttack() override;
 
-	//----------------------------------------------------------------------//
-	// IActionStoppedInterface
-	//----------------------------------------------------------------------//
-	virtual void HandleActionFinished() override;
+	void HandleActionFinished();
 };

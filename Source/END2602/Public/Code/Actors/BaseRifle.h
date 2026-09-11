@@ -9,6 +9,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRifleFireDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChanged, float, Current, float, Max);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionStopped);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadStart);
 
 UCLASS()
 class END2602_API ABaseRifle : public AActor
@@ -21,6 +23,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FRifleFireDelegate OnRifleFireDelegate;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnActionStopped OnActionStopped;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnReloadStart OnReloadStart;
 	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
 
 protected:
@@ -48,15 +52,18 @@ private:
 
 	inline bool CanShoot() const { return !ActionHappening && Alive && CurrentAmmo > 0.f; }
 
-	void ActionStopped();
-
 public:
 	FVector GetSource();
 
 	inline void OwnerMuerto() { Alive = false; }
 
+	UFUNCTION()
 	inline void ReloadAmmo() { CurrentAmmo = MaxAmmo; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
+
+	void RequestReload();
 
 	void Fire(const FRotator* Direction = nullptr);
 
+	UFUNCTION()
+	void ActionStopped();
 };
