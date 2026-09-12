@@ -14,11 +14,11 @@ class END2602_API AHealthPickup : public ADamagePickup
 {
 	GENERATED_BODY()
 
-public:
-	AHealthPickup();
-
 protected:
 	virtual void PostPickup() override;
 
 	virtual bool CanPickup(AActor* OtherActor) const override;
+
+public:
+	AHealthPickup();
 };

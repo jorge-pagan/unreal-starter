@@ -7,7 +7,7 @@
 #include "ExampleInterfaceOne.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, NotBlueprintable)
 class UExampleInterfaceOne : public UInterface
 {
 	GENERATED_BODY()
@@ -24,4 +24,6 @@ class END2602_API IExampleInterfaceOne
 public:
 
 	UFUNCTION() virtual void TestFunction() = 0;
+
+	UFUNCTION(BlueprintCallable) virtual void BlueprintCallable_Sept();
 };

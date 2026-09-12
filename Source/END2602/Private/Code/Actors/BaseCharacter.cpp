@@ -83,7 +83,7 @@ void ABaseCharacter::HandleMuerte(float NotUsed)
 	BaseRifle->OwnerMuerto();
 }
 
-bool ABaseCharacter::CanPickupHealth()
+bool ABaseCharacter::CanPickupHealth() const
 {
 	return false;
 }

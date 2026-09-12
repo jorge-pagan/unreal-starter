@@ -29,3 +29,8 @@ void AExampleActorWithInterfaces::TestFunction()
 {
 	UE_LOG(Game, Warning, TEXT("Hey, I made it into the TestFunction!"));
 }
+
+void AExampleActorWithInterfaces::BlueprintNativeEvent_Sept_Implementation()
+{
+	UE_LOG(Game, Warning, TEXT(",,,,,,,,,,I made it into the BlueprintNativeEvent! (Parent)"));
+}

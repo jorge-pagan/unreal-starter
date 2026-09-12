@@ -49,5 +49,5 @@ public:
 	//----------------------------------------------------------------------//
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//
-	virtual bool CanPickupHealth() override;
+	virtual bool CanPickupHealth() const override;
 };

@@ -22,5 +22,5 @@ class END2602_API IPickupQueriesInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual bool CanPickupHealth() = 0;
+	virtual bool CanPickupHealth() const = 0;
 };

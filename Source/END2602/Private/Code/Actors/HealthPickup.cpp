@@ -22,15 +22,9 @@ void AHealthPickup::PostPickup()
 
 bool AHealthPickup::CanPickup(AActor* OtherActor) const
 {
-	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	if (IPickupQueriesInterface* I = Cast<IPickupQueriesInterface>(OtherActor))
 	{
-		AActor* Actor = *It;
-
-		if (IPickupQueriesInterface* I = Cast<IPickupQueriesInterface>(Actor))
-		{
-			ABasePlayer* P = Cast<ABasePlayer>(I);
-			return P ? P->CanPickupHealth() : I->CanPickupHealth();
-		}
+		return I->CanPickupHealth();
 	}
 
 	return false;

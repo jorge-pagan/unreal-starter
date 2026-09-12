@@ -15,13 +15,13 @@ class END2602_API ADamagePickup : public ABasePickup
 {
 	GENERATED_BODY()
 
-public:
-	ADamagePickup();
-
 protected:
 	UPROPERTY(EditDefaultsOnly) float DamageAmount;
 	UPROPERTY(EditDefaultsOnly) UParticleSystemComponent* ParticleSystem;
 
 	virtual void HandlePickup(AActor* OtherActor, const FHitResult& SweepResult) override;
 	virtual void PostPickup() override;
+
+public:
+	ADamagePickup();
 };

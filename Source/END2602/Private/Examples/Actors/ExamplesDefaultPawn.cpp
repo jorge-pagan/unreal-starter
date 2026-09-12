@@ -5,6 +5,7 @@
 #include "../END2602.h"
 #include "GameFramework/PlayerInput.h"
 #include "EngineUtils.h" // TActorIterator (GetActorOfClass in Blueprints)
+#include "Examples/Actors/ExampleInterfaceTwo.h"
 
 // Sets default values
 AExamplesDefaultPawn::AExamplesDefaultPawn()
@@ -44,10 +45,34 @@ void AExamplesDefaultPawn::BeginPlay()
 
 		// Use the I version of the interface for attaching to simple functions
 
-		if (IExampleInterfaceOne* I = Cast<IExampleInterfaceOne>(Actor)) // This work because the interface is attached
+		if (IExampleInterfaceOne* I = Cast<IExampleInterfaceOne>(Actor)) // This work because the interface is attached in C++
 		{
-			UE_LOG(Game, Warning, TEXT("I was able to cast the ExampleActorWithInterfaces to our interface type"));
+			UE_LOG(Game, Warning, TEXT("I was able to cast the ExampleActorWithInterfaces to our first interface type"));
 			I->TestFunction(); // Equivalent to the EnemyAttack interface that should be implemented in C++
+		}
+
+		// This will not work because the interface is attached in blueprints
+		if (IExampleInterfaceTwo* I2 = Cast<IExampleInterfaceTwo>(Actor))
+		{
+			UE_LOG(Game, Warning, TEXT("I was able to cast the ExampleActorWithInterfaces to our second interface type"));
+			I2->BlueprintImplementableEvent_Sept(); // Equivalent to the EnemyAttack interface that should be implemented in C++
+		}
+
+		// If the interafce is attached in Blueprints, use the Implements functions to check instead
+		if (Actor->Implements<UExampleInterfaceTwo>())
+		{
+			UE_LOG(Game, Warning, TEXT("Actor implements our second interface type"));
+
+			IExampleInterfaceTwo::Execute_BlueprintImplementableEvent_Sept(Actor);
+		}
+
+		if (IExampleInterfaceThree* I3 = Cast<IExampleInterfaceThree>(Actor))
+		{
+			// Do not call the interface function directly on the object 
+			// it will crash and tell you to call the execute version of the function instead
+			//I3->BlueprintNativeEvent_Sept();
+			//I3->Execute_BlueprintNativeEvent_Sept(Actor); // This will work
+			//IExampleInterfaceThree::Execute_BlueprintNativeEvent_Sept(Actor); // This is prefered
 		}
 	}
 }

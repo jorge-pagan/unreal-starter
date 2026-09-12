@@ -20,7 +20,7 @@ ADamagePickup::ADamagePickup()
 void ADamagePickup::HandlePickup(AActor* OtherActor, const FHitResult& SweepResult)
 {
 	Super::HandlePickup(OtherActor, SweepResult);
-
+	
 	TSubclassOf<UDamageType> const DamageType = UDamageType::StaticClass();
 	FDamageEvent DamageEvent(DamageType);
 
@@ -29,5 +29,5 @@ void ADamagePickup::HandlePickup(AActor* OtherActor, const FHitResult& SweepResu
 
 void ADamagePickup::PostPickup()
 {
-
+	// Left empty to not call Destroy() in the ABasePickup::PostPickup()
 }

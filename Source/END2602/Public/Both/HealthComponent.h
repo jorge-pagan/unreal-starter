@@ -8,9 +8,7 @@
 #include "HealthComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHurtDelegate, float, Percent);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealDelegate, float, Percent);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMuerteDelegate, float, Percent);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -18,31 +16,22 @@ class END2602_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHurtDelegate OnHurtDelegate;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHealDelegate OnHealDelegate;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnMuerteDelegate OnMuerteDelegate;
+private:
+	UPROPERTY(EditAnywhere, Category = Default) float CurrentHealth;
 
-	UPROPERTY(EditAnywhere, Category = Default) float MaxHealth;
-
-	// Sets default values for this component's properties
-	UHealthComponent();
-
-
-
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-		FActorComponentTickFunction* ThisTickFunction) override;
+	UFUNCTION() void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+		                          class AController* InstigatedBy, AActor* DamageCauser);
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-private:
-	UPROPERTY(EditAnywhere, Category = Default) float CurrentHealth;
+public:
+	// Sets default values for this component's properties
+	UHealthComponent();
 
-	UFUNCTION()
-	void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-		class AController* InstigatedBy, AActor* DamageCauser);
-
+	UPROPERTY(EditAnywhere, Category = Default) float MaxHealth;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHurtDelegate OnHurtDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHealDelegate OnHealDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnMuerteDelegate OnMuerteDelegate;
 };

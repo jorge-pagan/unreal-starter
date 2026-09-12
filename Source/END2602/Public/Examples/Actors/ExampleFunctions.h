@@ -23,9 +23,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Declare in C++, define in C++, call in C++ and/or Blueprints
 	UFUNCTION(BlueprintCallable)
 	void BlueprintCallable();
 
+	// Declare in C++, define in Blueprints, call in C++ and/or Blueprints
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void BlueprintImplementableEvent();
 

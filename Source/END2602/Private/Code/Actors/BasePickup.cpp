@@ -18,6 +18,7 @@ void ABasePickup::PostLoad()
 {
 	Super::PostLoad();
 
+	BoxCollision->OnComponentBeginOverlap.Clear();
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &ABasePickup::BoundOverlap);
 }
 
