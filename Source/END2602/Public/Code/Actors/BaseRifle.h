@@ -3,67 +3,59 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 
 #include "BaseRifle.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadStart);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionStopped);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRifleFireDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChanged, float, Current, float, Max);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionStopped);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadStart);
 
 UCLASS()
 class END2602_API ABaseRifle : public AActor
 {
 	GENERATED_BODY()
 
-public:
-	
-	ABaseRifle();
+private:
+	float CurrentAmmo;
+	bool Alive = true;
+	bool ActionHappening = false;
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FRifleFireDelegate OnRifleFireDelegate;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnActionStopped OnActionStopped;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnReloadStart OnReloadStart;
-	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
+	inline bool CanShoot() const { return !ActionHappening && Alive && CurrentAmmo > 0.f; }
 
 protected:
 	// Don't forget to set the BaseCharacter's WeaponClass object to BP_CodeBaseRifle in the editor 
-	// (and not the ABaseRifle class)
+	// (and not this ABaseRifle class)
 
-	UPROPERTY(VisibleAnywhere, Category = Default) USkeletalMeshComponent* SkeletalMesh;
 	UPROPERTY(VisibleAnywhere, Category = Default) APawn* Parent;
+	UPROPERTY(VisibleAnywhere, Category = Default) USkeletalMeshComponent* SkeletalMesh;
 
-	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> ProjectileClass;
-	UPROPERTY(EditDefaultsOnly, Category = Default) FName ProjectileSpawnSocketName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) float FireDelay;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName ProjectileSpawnSocketName;
+	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> ProjectileClass;
+
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	inline void UseAmmo() { CurrentAmmo -= 1.f; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
 
-private:
-	UPROPERTY(VisibleAnywhere, Category = Default) float CurrentAmmo;
-
-	bool Alive = true;
-
-	bool ActionHappening = false;
-
-	inline bool CanShoot() const { return !ActionHappening && Alive && CurrentAmmo > 0.f; }
-
 public:
+	ABaseRifle();
+
+	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnReloadStart OnReloadStart;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnActionStopped OnActionStopped;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FRifleFireDelegate OnRifleFireDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
+
 	FVector GetSource();
 
 	inline void OwnerMuerto() { Alive = false; }
 
-	UFUNCTION()
-	void ReloadAmmo();
-
+	UFUNCTION()	void ReloadAmmo();
 	void RequestReload();
 
 	void Fire(const FRotator* Direction = nullptr);
-
-	UFUNCTION()
-	void ActionStopped();
+	UFUNCTION() void ActionStopped();
 };

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Code/Actors/BaseCharacter.h"
 #include "Code/Interfaces/EnemyBehaviors.h"
-#include "BrainComponent.h"
 
 #include "Agent.generated.h"
 
@@ -17,14 +17,10 @@ class END2602_API AAgent : public ABaseCharacter, public IEnemyBehaviorsInterfac
 {
 	GENERATED_BODY()
 
-public:
-	AAgent();
-
 private:
 	void UpdateBlackboardHealth(float Ratio);
 
-	UFUNCTION()
-	void UpdateBlackboardAmmo(float Current, float Max);
+	UFUNCTION() void UpdateBlackboardAmmo(float Current, float Max);
 
 protected:
 	// Don't forget to set the WeaponClass to BP_CodeBaseRifle in the editor (and not the ABaseRifle class)
@@ -43,13 +39,13 @@ protected:
 	virtual void HandleHurt(float Ratio) override;
 
 public:
-	UFUNCTION()
-	void HandleActionFinished();
+	AAgent();
+
+	UFUNCTION() void HandleActionFinished();
 
 	//----------------------------------------------------------------------//
 	// IEnemyBehaviorsInterface
 	//----------------------------------------------------------------------//
 	virtual void EnemyAttack() override;
-
 	virtual void EnemyReload() override;
 };

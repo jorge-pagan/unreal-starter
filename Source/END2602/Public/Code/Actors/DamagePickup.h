@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Code/Actors/BasePickup.h"
 #include "Particles/ParticleSystemComponent.h"
+
 #include "DamagePickup.generated.h"
 
 /**

@@ -3,9 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Code/Interfaces/EnemyBehaviors.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "AIController.h"
+
 #include "EnemyAttack.generated.h"
 
 /**

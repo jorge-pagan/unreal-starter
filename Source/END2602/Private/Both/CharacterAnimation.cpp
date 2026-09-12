@@ -3,6 +3,7 @@
 
 #include "Both/CharacterAnimation.h"
 #include "KismetAnimationLibrary.h"
+#include "../END2602.h"
 
 UCharacterAnimation::UCharacterAnimation() : DebugFire(false), DebugHit(false), DebugMuerte(false),
 CurrentMuerteAsset(nullptr), ActionSlotName("Action")

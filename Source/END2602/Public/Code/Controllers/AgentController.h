@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "AIController.h"
-#include "../END2602.h"
 
 #include "AgentController.generated.h"
 
@@ -16,9 +16,6 @@ class END2602_API AAgentController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
-	AAgentController();
-
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Default) UBehaviorTree* BTAsset;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName PlayerKey;
@@ -26,4 +23,7 @@ private:
 	void OnPossess(APawn* InPawn) override;
 
 	UFUNCTION() void HandlePerception(AActor* ActorInView, FAIStimulus Stimulus);
+
+public:
+	AAgentController();
 };

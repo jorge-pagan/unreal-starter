@@ -59,6 +59,5 @@ void AProjectile::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 	OtherActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 
-
 	Destroy();
 }

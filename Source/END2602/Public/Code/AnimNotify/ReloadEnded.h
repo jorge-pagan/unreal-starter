@@ -3,8 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "../END2602.h"
+
 #include "ReloadEnded.generated.h"
 
 /**

@@ -2,6 +2,7 @@
 
 
 #include "Code/Actors/BaseCharacter.h"
+#include "../END2602.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), WeaponSocketName(TEXT("WeaponSocket"))
@@ -33,8 +34,8 @@ void ABaseCharacter::BeginPlay()
 	BaseRifleChildComponent->SetChildActorClass(WeaponClass);
 
 	// Attaching to the Mesh Component
-	BaseRifleChildComponent->AttachToComponent(GetMesh(),
-		FAttachmentTransformRules::KeepRelativeTransform, WeaponSocketName);
+	BaseRifleChildComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, 
+		                                       WeaponSocketName);
 
 	// Casting to ABaseRifle to be able to fire
 	if (ABaseRifle* CastedRifle = Cast<ABaseRifle>(BaseRifleChildComponent->GetChildActor()))

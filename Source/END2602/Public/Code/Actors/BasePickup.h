@@ -3,18 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+
 #include "Components/BoxComponent.h"
+
 #include "BasePickup.generated.h"
 
 UCLASS(Abstract)
 class END2602_API ABasePickup : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ABasePickup();
 
 protected:
 	UPROPERTY(EditDefaultsOnly) UBoxComponent* BoxCollision;
@@ -32,4 +29,8 @@ private:
 	UFUNCTION() void BoundOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 		                          UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
 		                          bool bFromSweep, const FHitResult& SweepResult);
+	
+public:	
+	// Sets default values for this actor's properties
+	ABasePickup();
 };

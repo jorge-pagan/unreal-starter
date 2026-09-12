@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Code/Actors/BaseCharacter.h"
 #include "Both/PlayerHUD.h"
 
@@ -17,8 +18,8 @@ class END2602_API ABasePlayer : public ABaseCharacter
 	GENERATED_BODY()
 
 private:
-	void InputAxisMoveForward(float AxisValue);
 	void InputAxisStrafe(float AxisValue);
+	void InputAxisMoveForward(float AxisValue);
 
 	void Fire();
 	void Reload();

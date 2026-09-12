@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Animation/AnimNotifies/AnimNotify.h"
+
 #include "ReloadNow.generated.h"
 
 /**

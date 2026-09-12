@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "BehaviorTree/BTTaskNode.h"
-#include "AIController.h"
-#include "NavigationSystem.h"
-#include "BehaviorTree/BlackboardComponent.h"
 #include "../END2602.h"
 
 #include "FindLocation.generated.h"

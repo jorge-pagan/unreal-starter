@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "../../Both/CharacterAnimation.h"
 #include "GameFramework/Character.h"
 #include "Both/HealthComponent.h"
 #include "Code/Actors/BaseRifle.h"
 #include "Code/Interfaces/PickupQueriesInterface.h"
-#include "../END2602.h"
 
 #include "BaseCharacter.generated.h"
 
@@ -17,13 +17,6 @@ class END2602_API ABaseCharacter : public ACharacter, public IPickupQueriesInter
 {
 	GENERATED_BODY()
 
-public:
-	// Sets default values for this character's properties
-	ABaseCharacter();
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -31,21 +24,21 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) UChildActorComponent* BaseRifleChildComponent;
 	UPROPERTY(EditDefaultsOnly, Category = Default) ABaseRifle* BaseRifle;
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> WeaponClass;
-
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName WeaponSocketName;
-
 	UPROPERTY(EditDefaultsOnly, Category = Default) UCharacterAnimation* AnimInstance;
 	UPROPERTY(EditDefaultsOnly, Category = Default) UStaticMesh* ProjectileMesh;
-
 	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
 
-	UFUNCTION()
-	virtual void HandleHurt(float NotUsed);
-
-	UFUNCTION()
-	virtual void HandleMuerte(float NotUsed);
+	UFUNCTION() virtual void HandleHurt(float NotUsed);
+	UFUNCTION() virtual void HandleMuerte(float NotUsed);
 
 public:
+	// Sets default values for this character's properties
+	ABaseCharacter();
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 	//----------------------------------------------------------------------//
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//

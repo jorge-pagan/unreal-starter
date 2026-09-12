@@ -2,6 +2,7 @@
 
 
 #include "Code/AI/EnemyAttack.h"
+#include "AIController.h"
 #include "EngineUtils.h"
 
 EBTNodeResult::Type UEnemyAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

@@ -2,6 +2,9 @@
 
 
 #include "Code/AI/FindLocation.h"
+#include "AIController.h"
+#include "NavigationSystem.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UFindLocation::UFindLocation() : Radius(300.f), KeyName("Location") {} // Default value given to these variables
 

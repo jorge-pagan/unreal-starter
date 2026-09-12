@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "Code/Interfaces/HandleReloadInterface.h"
-#include "../END2602.h"
 
 #include "CharacterAnimation.generated.h"
 
@@ -29,6 +28,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugMuerte;
 	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugReload;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionSlotName;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Speed;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Direction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* FireAsset;
@@ -45,25 +45,14 @@ public:
 
 	void PreviewWindowUpdate();
 
-	UFUNCTION(BlueprintCallable)
-	void SetReloadAnimation(UAnimSequence* NewAsset) { ReloadAsset = NewAsset; }
-
-	UFUNCTION(BlueprintCallable)
-	void FireAnimation();
-
-	UFUNCTION(BlueprintCallable)
-	void HitAnimation();
-
-	UFUNCTION(BlueprintCallable)
-	void MuerteAnimation(float Percent = 0.f);
-
-	UFUNCTION(BlueprintCallable)
-	void ReloadAnimation();
+	UFUNCTION(BlueprintCallable) void FireAnimation();
+	UFUNCTION(BlueprintCallable) void HitAnimation();
+	UFUNCTION(BlueprintCallable) void MuerteAnimation(float Percent = 0.f);
+	UFUNCTION(BlueprintCallable) void ReloadAnimation();
 
 	//----------------------------------------------------------------------//
 	// IHandleReloadInterface
 	//----------------------------------------------------------------------//
 	void HandleReloadNow() override;
-
 	void HandleReloadEnded() override;
 };
