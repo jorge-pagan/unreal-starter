@@ -17,6 +17,12 @@ ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), Weapo
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 }
 
+// Called to bind functionality to input
+void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
@@ -77,10 +83,7 @@ void ABaseCharacter::HandleMuerte(float NotUsed)
 	BaseRifle->OwnerMuerto();
 }
 
-// Called to bind functionality to input
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+bool ABaseCharacter::CanPickupHealth()
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	return false;
 }
-

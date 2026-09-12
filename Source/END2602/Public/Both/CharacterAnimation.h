@@ -60,6 +60,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReloadAnimation();
 
+	//----------------------------------------------------------------------//
+	// IHandleReloadInterface
+	//----------------------------------------------------------------------//
 	void HandleReloadNow() override;
 
 	void HandleReloadEnded() override;

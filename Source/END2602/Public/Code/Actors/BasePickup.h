@@ -26,6 +26,7 @@ protected:
 
 	virtual void HandlePickup(AActor* OtherActor, const FHitResult& SweepResult);
 	virtual void PostPickup();
+	virtual bool CanPickup(AActor* OtherActor) const;
 
 private:
 	UFUNCTION() void BoundOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 

@@ -108,3 +108,8 @@ void ABasePlayer::Reload()
 {
 	BaseRifle->RequestReload();
 }
+
+bool ABasePlayer::CanPickupHealth()
+{
+	return true;
+}

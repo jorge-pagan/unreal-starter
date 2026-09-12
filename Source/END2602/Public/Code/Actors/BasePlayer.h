@@ -42,4 +42,8 @@ public:
 
 	virtual FRotator GetBaseAimRotation() const override;
 
+	//----------------------------------------------------------------------//
+	// IPickupQueriesInterface
+	//----------------------------------------------------------------------//
+	virtual bool CanPickupHealth() override;
 };

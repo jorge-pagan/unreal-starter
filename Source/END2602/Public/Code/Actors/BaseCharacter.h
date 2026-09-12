@@ -7,18 +7,22 @@
 #include "GameFramework/Character.h"
 #include "Both/HealthComponent.h"
 #include "Code/Actors/BaseRifle.h"
+#include "Code/Interfaces/PickupQueriesInterface.h"
 #include "../END2602.h"
 
 #include "BaseCharacter.generated.h"
 
 UCLASS(Abstract)
-class END2602_API ABaseCharacter : public ACharacter
+class END2602_API ABaseCharacter : public ACharacter, public IPickupQueriesInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -42,7 +46,8 @@ protected:
 	virtual void HandleMuerte(float NotUsed);
 
 public:
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	//----------------------------------------------------------------------//
+	// IPickupQueriesInterface
+	//----------------------------------------------------------------------//
+	virtual bool CanPickupHealth() override;
 };

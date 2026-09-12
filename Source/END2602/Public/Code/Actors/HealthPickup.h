@@ -19,4 +19,6 @@ public:
 
 protected:
 	virtual void PostPickup() override;
+
+	virtual bool CanPickup(AActor* OtherActor) const override;
 };

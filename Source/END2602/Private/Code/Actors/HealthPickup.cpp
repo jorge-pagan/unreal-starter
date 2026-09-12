@@ -2,7 +2,10 @@
 
 
 #include "Code/Actors/HealthPickup.h"
+#include "Code/Interfaces/PickupQueriesInterface.h"
 #include "Engine/DamageEvents.h"
+#include "Code/Actors/BasePlayer.h"
+#include "EngineUtils.h"
 
 AHealthPickup::AHealthPickup()
 {
@@ -15,4 +18,20 @@ AHealthPickup::AHealthPickup()
 void AHealthPickup::PostPickup()
 {
 	ABasePickup::PostPickup();
+}
+
+bool AHealthPickup::CanPickup(AActor* OtherActor) const
+{
+	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	{
+		AActor* Actor = *It;
+
+		if (IPickupQueriesInterface* I = Cast<IPickupQueriesInterface>(Actor))
+		{
+			ABasePlayer* P = Cast<ABasePlayer>(I);
+			return P ? P->CanPickupHealth() : I->CanPickupHealth();
+		}
+	}
+
+	return false;
 }

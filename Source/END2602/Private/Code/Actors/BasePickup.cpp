@@ -42,6 +42,14 @@ void ABasePickup::BoundOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	                           UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	                           bool bFromSweep, const FHitResult& SweepResult)
 {
-	HandlePickup(OtherActor, SweepResult);
-	PostPickup();
+	if (CanPickup(OtherActor))
+	{
+		HandlePickup(OtherActor, SweepResult);
+		PostPickup();
+	}
+}
+
+bool ABasePickup::CanPickup(AActor* OtherActor) const
+{
+	return true;
 }
