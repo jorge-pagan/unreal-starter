@@ -13,7 +13,7 @@ ADamagePickup::ADamagePickup()
 	FAttachmentTransformRules TRules = { EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false };
 	ParticleSystem->AttachToComponent(BoxCollision, TRules);
 
-	ParticleSystem->SetRelativeLocation(FVector(0.f, 0.f, -30.f));
+	ParticleSystem->SetRelativeLocation(FVector(0.f, 0.f, -30.f)); 
 	ParticleSystem->SetRelativeScale3D(FVector(0.4f, 0.4f, 0.25f));
 }
 
