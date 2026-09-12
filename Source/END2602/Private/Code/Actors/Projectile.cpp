@@ -59,6 +59,6 @@ void AProjectile::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 	OtherActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 
-	UE_LOG(Game, Log, TEXT("Destroyed (Overlap)"));
+
 	Destroy();
 }

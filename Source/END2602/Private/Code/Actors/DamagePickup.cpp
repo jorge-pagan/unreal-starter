@@ -4,7 +4,7 @@
 #include "Code/Actors/DamagePickup.h"
 #include "Engine/DamageEvents.h"
 
-ADamagePickup::ADamagePickup() : DamageAmount(2.f)
+ADamagePickup::ADamagePickup()
 {
 	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>("ParticleSystem");
 	
@@ -25,4 +25,9 @@ void ADamagePickup::HandlePickup(AActor* OtherActor, const FHitResult& SweepResu
 	FDamageEvent DamageEvent(DamageType);
 
 	OtherActor->TakeDamage(DamageAmount, DamageEvent, NULL, this);
+}
+
+void ADamagePickup::PostPickup()
+{
+
 }

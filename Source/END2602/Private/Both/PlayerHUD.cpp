@@ -108,5 +108,4 @@ void UPlayerHUD::SetAmmo(float Current, float Max)
 {
 	CurrentAmmo->SetText(FText::AsNumber(Current));
 	MaxAmmo->SetText(FText::AsNumber(Max));
-	UE_LOG(Game, Warning, TEXT("Successfully called function \"SetAmmo\" from OnAmmoChanged Broadcast"));
 }
