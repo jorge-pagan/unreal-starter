@@ -39,9 +39,13 @@ void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage,
 	const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
-	if (CurrentHealth > 0.f)
+	if (Damage > 0.f)
 	{
 		OnHurtDelegate.Broadcast(CurrentHealth / MaxHealth);
+	}
+	else if (CurrentHealth > 0.f)
+	{
+		OnHealDelegate.Broadcast(CurrentHealth / MaxHealth);
 	}
 	else
 	{

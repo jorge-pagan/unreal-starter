@@ -48,6 +48,7 @@ void ABasePlayer::BeginPlay()
 		if (HealthComponent)
 		{
 			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
+			HealthComponent->OnHealDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
 			HealthComponent->OnMuerteDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
 		}
 	}
