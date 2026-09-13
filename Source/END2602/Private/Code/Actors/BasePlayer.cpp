@@ -4,7 +4,6 @@
 #include "Code/Actors/BasePlayer.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Blueprint/UserWidget.h"
 #include "../END2602.h"
 
 ABasePlayer::ABasePlayer() : SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
@@ -33,7 +32,10 @@ void ABasePlayer::BeginPlay()
 	if (APlayerController* CastedController = Cast<APlayerController>(GetController()))
 		PlayerController = CastedController;
 	else
+	{
+		UE_LOG(Game, Warning, TEXT("No PlayerController present in ABasePlayer!"));
 		Destroy();
+	}
 
 	if (UPlayerHUD* CastedHUD = CreateWidget<UPlayerHUD>(PlayerController, HUDClass, ""))
 	{

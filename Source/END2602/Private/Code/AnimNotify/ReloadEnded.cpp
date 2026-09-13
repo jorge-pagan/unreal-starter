@@ -3,7 +3,6 @@
 
 #include "Code/AnimNotify/ReloadEnded.h"
 #include "Code/Interfaces/HandleReloadInterface.h"
-#include "EngineUtils.h"
 
 void UReloadEnded::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {

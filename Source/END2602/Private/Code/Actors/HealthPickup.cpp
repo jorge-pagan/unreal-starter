@@ -3,9 +3,7 @@
 
 #include "Code/Actors/HealthPickup.h"
 #include "Code/Interfaces/PickupQueriesInterface.h"
-#include "Engine/DamageEvents.h"
-#include "Code/Actors/BasePlayer.h"
-#include "EngineUtils.h"
+#include "../END2602.h"
 
 AHealthPickup::AHealthPickup()
 {
@@ -25,6 +23,10 @@ bool AHealthPickup::CanPickup(AActor* OtherActor) const
 	if (IPickupQueriesInterface* I = Cast<IPickupQueriesInterface>(OtherActor))
 	{
 		return I->CanPickupHealth();
+	}
+	else
+	{
+		UE_LOG(Game, Warning, TEXT("Overlapped actor from AHealthPickup does not have an IPickupQueriesInterface"));
 	}
 
 	return false;

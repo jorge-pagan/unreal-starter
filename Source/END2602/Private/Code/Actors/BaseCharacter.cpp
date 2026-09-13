@@ -68,6 +68,10 @@ void ABaseCharacter::BeginPlay()
 		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);
 		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);
 	}
+	else
+	{
+		UE_LOG(Game, Warning, TEXT("No HealthComponent is present in ABaseCharacter!"));
+	}
 }
 
 void ABaseCharacter::HandleHurt(float NotUsed)

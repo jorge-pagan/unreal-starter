@@ -3,7 +3,6 @@
 
 #include "Code/AnimNotify/ReloadNow.h"
 #include "Code/Interfaces/HandleReloadInterface.h"
-#include "UObject/UObjectIterator.h" 
 
 void UReloadNow::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {

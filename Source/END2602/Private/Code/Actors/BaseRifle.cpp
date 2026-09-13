@@ -3,8 +3,6 @@
 
 #include "Code/Actors/BaseRifle.h"
 #include "Code/Actors/Projectile.h" // Used only to define ProjectileClass in code, otherwise it had to be defined in editor
-#include "Code/Actors/Agent.h"
-#include "EngineUtils.h"
 #include "../END2602.h"
 
 // Sets default values

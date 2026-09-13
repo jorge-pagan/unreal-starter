@@ -23,6 +23,7 @@ EBTNodeResult::Type UFindLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 		FinishLatentTask(OwnerComp, r);
 	}
+	else UE_LOG(Game, Warning, TEXT("There is no navigation system present in the world"));
 
 	return r;
 }
