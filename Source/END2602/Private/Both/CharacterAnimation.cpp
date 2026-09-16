@@ -6,7 +6,7 @@
 #include "../END2602.h"
 
 UCharacterAnimation::UCharacterAnimation() : DebugFire(false), DebugHit(false), DebugMuerte(false),
-CurrentMuerteAsset(nullptr), ActionSlotName("Action")
+ActionSlotName("Action"), CurrentMuerteAsset(nullptr)
 {
 
 }
@@ -45,10 +45,10 @@ void UCharacterAnimation::HitAnimation()
 	PlaySlotAnimationAsDynamicMontage(HitAsset, ActionSlotName);
 }
 
-void UCharacterAnimation::MuerteAnimation(float Percent)
+void UCharacterAnimation::MuerteAnimation_Implementation(float Percent)
 {
 	// The modulo sign prevents Rand from going above Array.Num() - 1!
-	CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
+	if (!MuerteAssets.IsEmpty()) CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
 }
 
 void UCharacterAnimation::ReloadAnimation()

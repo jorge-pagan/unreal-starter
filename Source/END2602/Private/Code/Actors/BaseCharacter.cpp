@@ -14,6 +14,7 @@ ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), Weapo
 	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 
 	BaseRifleChildComponent = CreateDefaultSubobject<UChildActorComponent>("BaseRifleChildComponent");
+	BaseRifleChildComponent->SetChildActorClass(WeaponClass);
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 }
@@ -38,7 +39,7 @@ void ABaseCharacter::BeginPlay()
 		                                       WeaponSocketName);
 
 	// Casting to ABaseRifle to be able to fire
-	if (ABaseRifle* CastedRifle = Cast<ABaseRifle>(BaseRifleChildComponent->GetChildActor()))
+	if (ABaseRifle* CastedRifle = BaseRifle ? BaseRifle : Cast<ABaseRifle>(BaseRifleChildComponent->GetChildActor()))
 	{
 		BaseRifle = CastedRifle;
 	}

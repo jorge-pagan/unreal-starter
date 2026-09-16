@@ -7,6 +7,7 @@
 
 AHealthPickup::AHealthPickup()
 {
+	DamageAmount = -1.6f;
 	BoxCollision->SetRelativeScale3D(FVector(1.5f, 1.5f, 2.f));
 
 	ParticleSystem->SetRelativeLocation(FVector(0.f, 0.f, -40.f));

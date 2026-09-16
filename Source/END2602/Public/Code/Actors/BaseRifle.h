@@ -6,9 +6,7 @@
 
 #include "BaseRifle.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadStart);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnActionStopped);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRifleFireDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnRifleEvent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChanged, float, Current, float, Max);
 
 UCLASS()
@@ -27,10 +25,10 @@ protected:
 	// Don't forget to set the BaseCharacter's WeaponClass object to BP_CodeBaseRifle in the editor 
 	// (and not this ABaseRifle class)
 
+	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
+	UPROPERTY(EditDefaultsOnly, Category = Default) float FireDelay;
 	UPROPERTY(VisibleAnywhere, Category = Default) APawn* Parent;
 	UPROPERTY(VisibleAnywhere, Category = Default) USkeletalMeshComponent* SkeletalMesh;
-
-	UPROPERTY(EditDefaultsOnly, Category = Default) float FireDelay;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ProjectileSpawnSocketName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> ProjectileClass;
 
@@ -38,15 +36,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	inline void UseAmmo() { CurrentAmmo -= 1.f; OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo); }
+	void UseAmmo();
 
 public:
 	ABaseRifle();
 
-	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnReloadStart OnReloadStart;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnActionStopped OnActionStopped;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable) FRifleFireDelegate OnRifleFireDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnRifleEvent OnReloadStart;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnRifleEvent OnActionStopped;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnRifleEvent OnRifleFireDelegate;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
 
 	FVector GetSource();

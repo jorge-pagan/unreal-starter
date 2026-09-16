@@ -31,6 +31,16 @@ void ABaseRifle::BeginPlay()
 		UE_LOG(Game, Warning, TEXT("Failed to convert parent actor to pawn. Need a pawn to own this rifle."));
 		Destroy();
 	}
+
+	// Delays the call to ReloadAmmo to bind the delegates to the 
+	// PlayerHUD Ammo Update and Agent's Update Blackboard Ammo functions
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ABaseRifle::ReloadAmmo);
+}
+
+void ABaseRifle::UseAmmo()
+{
+	CurrentAmmo = FMath::Max(0, CurrentAmmo - 1.f);
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
 }
 
 void ABaseRifle::ActionStopped()

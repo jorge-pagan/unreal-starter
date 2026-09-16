@@ -8,9 +8,7 @@
 
 #include "HealthComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHurtDelegate, float, Percent);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealDelegate, float, Percent);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMuerteDelegate, float, Percent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeHealth, float, Percent);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class END2602_API UHealthComponent : public UActorComponent
@@ -32,7 +30,7 @@ public:
 	UHealthComponent();
 
 	UPROPERTY(EditAnywhere, Category = Default) float MaxHealth;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHurtDelegate OnHurtDelegate;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnHealDelegate OnHealDelegate;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnMuerteDelegate OnMuerteDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnHurtDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnHealDelegate;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnMuerteDelegate;
 };

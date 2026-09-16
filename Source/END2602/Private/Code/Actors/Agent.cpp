@@ -47,10 +47,9 @@ void AAgent::BeginPlay()
 	Super::BeginPlay();
 
 	UpdateBlackboardHealth(1.f);
-	
+
 	BaseRifle->OnActionStopped.AddDynamic(this, &AAgent::HandleActionFinished);
 	BaseRifle->OnAmmoChanged.AddDynamic(this, &AAgent::UpdateBlackboardAmmo);
-	BaseRifle->ReloadAmmo();
 }
 
 void AAgent::HandleHurt(float Ratio)

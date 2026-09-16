@@ -45,8 +45,6 @@ void ABasePlayer::BeginPlay()
 
 		BaseRifle->OnAmmoChanged.AddDynamic(HUDObject, &UPlayerHUD::SetAmmo);
 
-		BaseRifle->ReloadAmmo();
-
 		if (HealthComponent)
 		{
 			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);

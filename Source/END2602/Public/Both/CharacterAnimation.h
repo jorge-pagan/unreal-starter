@@ -9,8 +9,7 @@
 
 #include "CharacterAnimation.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadNow);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadEnded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReload);
 
 /**
  *
@@ -39,8 +38,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* ReloadAsset;
 
 public:
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReloadNow OnReloadNow;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReloadEnded OnReloadEnded;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReload OnReloadNow;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReload OnReloadEnded;
 
 	void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 
@@ -48,7 +47,7 @@ public:
 
 	UFUNCTION(BlueprintCallable) void FireAnimation();
 	UFUNCTION(BlueprintCallable) void HitAnimation();
-	UFUNCTION(BlueprintCallable) void MuerteAnimation(float Percent = 0.f);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent) void MuerteAnimation(float Percent = 0.f);
 	UFUNCTION(BlueprintCallable) void ReloadAnimation();
 
 	//----------------------------------------------------------------------//
