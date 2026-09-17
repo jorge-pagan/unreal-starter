@@ -37,6 +37,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void HandleHurt(float Ratio) override;
+	virtual void HandleMuerte(float Ratio) override;
 
 public:
 	AAgent();

@@ -22,6 +22,8 @@ class END2602_API UCharacterAnimation : public UAnimInstance, public IHandleRelo
 private:
 	UCharacterAnimation();
 
+	void MuerteEnded();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugFire;
 	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugHit;

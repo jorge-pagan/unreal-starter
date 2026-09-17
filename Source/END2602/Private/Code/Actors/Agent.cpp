@@ -58,6 +58,12 @@ void AAgent::HandleHurt(float Ratio)
 	UpdateBlackboardHealth(Ratio);
 }
 
+void AAgent::HandleMuerte(float Ratio)
+{
+	Super::HandleMuerte(Ratio);
+	DetachFromControllerPendingDestroy();
+}
+
 void AAgent::HandleActionFinished()
 {
 	FAIMessage::Send(this, FAIMessage(ActionStoppedMessage, this, true));

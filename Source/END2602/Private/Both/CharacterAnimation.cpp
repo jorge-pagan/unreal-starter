@@ -11,6 +11,28 @@ ActionSlotName("Action"), CurrentMuerteAsset(nullptr)
 
 }
 
+void UCharacterAnimation::MuerteEnded()
+{
+
+}
+
+void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
+{
+	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
+
+	if (APawn* pawn = TryGetPawnOwner())
+	{
+		FVector vel = pawn->GetVelocity();
+
+		Speed = vel.Size();
+		Direction = UKismetAnimationLibrary::CalculateDirection(vel, pawn->GetActorRotation());
+	}
+	else // UE Editor APB Preview Only
+	{
+		PreviewWindowUpdate();
+	}
+}
+
 void UCharacterAnimation::PreviewWindowUpdate()
 {
 	if (DebugMuerte)
@@ -49,28 +71,15 @@ void UCharacterAnimation::MuerteAnimation_Implementation(float Percent)
 {
 	// The modulo sign prevents Rand from going above Array.Num() - 1!
 	if (!MuerteAssets.IsEmpty()) CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
+
+	FTimerHandle DeathEndedTimer;
+	GetWorld()->GetTimerManager().SetTimer(DeathEndedTimer, this, &UCharacterAnimation::MuerteEnded, 
+		                                   CurrentMuerteAsset->GetPlayLength());
 }
 
 void UCharacterAnimation::ReloadAnimation()
 {
 	PlaySlotAnimationAsDynamicMontage(ReloadAsset, ActionSlotName);
-}
-
-void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
-{
-	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
-
-	if (APawn* pawn = TryGetPawnOwner())
-	{
-		FVector vel = pawn->GetVelocity();
-
-		Speed = vel.Size();
-		Direction = UKismetAnimationLibrary::CalculateDirection(vel, pawn->GetActorRotation());
-	}
-	else // UE Editor APB Preview Only
-	{
-		PreviewWindowUpdate();
-	}
 }
 
 void UCharacterAnimation::HandleReloadNow()
