@@ -20,10 +20,14 @@ UCLASS()
 class END2602_API UResultsHUD : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+private:
+	void LoadMainMenu();
+
 protected:
 	UCodeGameInstance* GameInstance;
-	UPROPERTY(EditDefaultsOnly) int32 WinWidgetSwitcherIndex = 1;
+	UPROPERTY(EditDefaultsOnly) int32 WinResultsSwitchIndex = 1;
+	UPROPERTY(EditDefaultsOnly) float WinMenuDisplayDuration = 2.f;
 	UPROPERTY(EditDefaultsOnly) ESlateVisibility ButtonVisibilityOnWin = ESlateVisibility::Hidden;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UWidgetSwitcher* ResultsSwitch;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UVerticalBox* ButtonBox;

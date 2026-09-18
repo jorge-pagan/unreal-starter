@@ -27,10 +27,10 @@ void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlayerController* PlayerController = nullptr;
-
 	if (APlayerController* CastedController = Cast<APlayerController>(GetController()))
+	{
 		PlayerController = CastedController;
+	}
 	else
 	{
 		UE_LOG(Game, Warning, TEXT("No PlayerController present in ABasePlayer!"));
@@ -111,9 +111,10 @@ void ABasePlayer::Reload()
 	BaseRifle->RequestReload();
 }
 
-void ABasePlayer::PlayerLost()
+void ABasePlayer::PlayerWon()
 {
-	OnPlayerLost.Broadcast();
+	DisableInput(PlayerController);
+	HUDObject->RemoveFromParent();
 }
 
 bool ABasePlayer::CanPickupHealth() const

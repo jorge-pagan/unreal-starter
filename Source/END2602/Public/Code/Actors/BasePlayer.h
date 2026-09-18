@@ -20,12 +20,14 @@ class END2602_API ABasePlayer : public ABaseCharacter
 	GENERATED_BODY()
 
 private:
+	APlayerController* PlayerController;
+
 	void InputAxisStrafe(float AxisValue);
 	void InputAxisMoveForward(float AxisValue);
 
 	void Fire();
 	void Reload();
-	UFUNCTION() void PlayerLost();
+	UFUNCTION() inline void PlayerLost() { OnPlayerLost.Broadcast(); };
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;
@@ -41,6 +43,7 @@ protected:
 public:
 	ABasePlayer();
 
+	void PlayerWon();
 	UPROPERTY(EditDefaultsOnly, Category = Default) FOnPlayerLost OnPlayerLost;
 
 	// Called to bind functionality to input

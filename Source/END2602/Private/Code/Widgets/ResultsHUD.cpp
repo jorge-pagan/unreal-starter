@@ -4,6 +4,12 @@
 #include "Code/Widgets/ResultsHUD.h"
 #include "../END2602.h"
 
+void UResultsHUD::LoadMainMenu()
+{
+	// Hack that does the travel logic for us to enter the main menu
+	MainMenuButton->OnBackgroundButtonClicked.Broadcast();
+}
+
 void UResultsHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -23,6 +29,10 @@ void UResultsHUD::NativeConstruct()
 
 void UResultsHUD::WinConditionMet()
 {
-	ResultsSwitch->ActiveWidgetIndex = WinWidgetSwitcherIndex;
+	ResultsSwitch->SetActiveWidgetIndex(WinResultsSwitchIndex);
 	ButtonBox->SetVisibility(ButtonVisibilityOnWin);
+
+	FTimerHandle WinDisplayDurationTimer;
+	GetWorld()->GetTimerManager().SetTimer(WinDisplayDurationTimer, this, 
+		                                   &UResultsHUD::LoadMainMenu, WinMenuDisplayDuration);
 }

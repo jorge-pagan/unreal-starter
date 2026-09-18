@@ -17,14 +17,11 @@ ResultsWidgetClass(UResultsHUD::StaticClass()), NumberOfEnemies(0)
 void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 {
 	NumberOfEnemies = FMath::Max(0, NumberOfEnemies - 1);
-	if (NumberOfEnemies > 0)
-	{
-
-	}
-	else
+	if (NumberOfEnemies == 0)
 	{
 		ResultsWidgetObject->WinConditionMet();
 		ResultsWidgetObject->AddToViewport();
+		CurrentPlayer->PlayerWon();
 
 		UE_LOG(Game, Warning, TEXT("You win!!!"));
 	}
