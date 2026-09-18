@@ -64,8 +64,8 @@ void ABaseCharacter::BeginPlay()
 	// Sets the HealthComponent delegates
 	if (HealthComponent)
 	{
-		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);                                  // Triggers the hit animation for the ABaseCharacter.
-		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);                              // Triggers the death animation and disables input for the ABaseCharacter.
+		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);
+		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);
 	}
 	else
 	{

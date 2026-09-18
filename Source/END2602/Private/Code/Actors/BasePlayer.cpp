@@ -10,6 +10,8 @@
 ABasePlayer::ABasePlayer() : SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
 HUDClass(UPlayerHUD::StaticClass())
 {
+	// Tick already disabled by the ABaseCharacter
+
 	// Initialization
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("springArm");
 	Camera = CreateDefaultSubobject<UCameraComponent>("cam");
@@ -56,7 +58,7 @@ void ABasePlayer::BeginPlay()
 			HealthComponent->OnHealDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);                              // Updates the HealthBar from the HUD.
 			HealthComponent->OnMuerteDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);                            // Updates the HealthBar from the HUD.
 
-			AnimInstance->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);                                      // Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after losing.
+			AnimInstance->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);
 		}
 	}
 	else

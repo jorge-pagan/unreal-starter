@@ -6,42 +6,20 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BrainComponent.h"
 
+ // Ctor that sets default values for AAgent.
 AAgent::AAgent() : TintName("Tint"), Color(FLinearColor(0.0, 0.083584, 1.0, 0.0))
 {
-	PrimaryActorTick.bStartWithTickEnabled = false;
-	PrimaryActorTick.bCanEverTick = true;
+	// Tick already disabled by the ABaseCharacter
 }
 
+// Called after loading the level and starting the game; runs before BeginPlay.
 void AAgent::PostLoad()
 {
 	Super::PostLoad();
 	GetMesh()->SetVectorParameterValueOnMaterials(TintName, FVector(Color));
 }
 
-void AAgent::UpdateBlackboardHealth(float Ratio)
-{
-	APawn* AgentPawn = Cast<APawn>(this);
-
-	if (AgentPawn)
-	{
-		AAIController* AIController = Cast<AAIController>(AgentPawn->GetController());
-
-		if (AIController) AIController->GetBlackboardComponent()->SetValueAsFloat(HealthRatioKey, Ratio);
-	}
-}
-
-void AAgent::UpdateBlackboardAmmo(float Current, float Max)
-{
-	APawn* AgentPawn = Cast<APawn>(this);
-
-	if (AgentPawn)
-	{
-		AAIController* AIController = Cast<AAIController>(AgentPawn->GetController());
-
-		if (AIController) AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
-	}
-}
-
+// Called when the game starts or when spawned.
 void AAgent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -54,29 +32,62 @@ void AAgent::BeginPlay()
 	AnimInstance->OnDeathEnded.AddDynamic(this, &AActor::K2_DestroyActor); 
 }
 
+// Updates the Health value in the AI Blackboard.
+void AAgent::UpdateBlackboardHealth(float Ratio)
+{
+	if (APawn* AgentPawn = Cast<APawn>(this))
+	{
+		if (AAIController* AIController = Cast<AAIController>(AgentPawn->GetController()))
+		{
+			// Set the correct value for the health value in the AI Blackboard in the AIController
+			AIController->GetBlackboardComponent()->SetValueAsFloat(HealthRatioKey, Ratio);
+		}
+	}
+}
+
+// Updates the Ammo value in the AI Blackboard.
+void AAgent::UpdateBlackboardAmmo(float Current, float Max)
+{
+	if (APawn* AgentPawn = Cast<APawn>(this))
+	{
+		if (AAIController* AIController = Cast<AAIController>(AgentPawn->GetController()))
+		{
+			// Set the correct value for the current ammo value in the AI Blackboard in the AIController
+			AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
+		}
+	}
+}
+
+// Triggers the hit animation for the AAgent and updates the Health in the AI Blackboard.
 void AAgent::HandleHurt(float Ratio)
 {
 	Super::HandleHurt(Ratio);
 	UpdateBlackboardHealth(Ratio);
 }
 
+// Triggers the death animation for the AAgent.
 void AAgent::HandleMuerte(float Ratio)
 {
 	Super::HandleMuerte(Ratio);
+
+	// Prevents the AAgent from doing anything after death
 	DetachFromControllerPendingDestroy();
 }
 
+// Sends a message to the UBTTaskNode to indicate the completion of a certain behavior.
 void AAgent::HandleActionFinished()
 {
 	FAIMessage::Send(this, FAIMessage(ActionStoppedMessage, this, true));
 }
 
-void AAgent::EnemyReload()
-{
-	BaseRifle->RequestReload();
-}
-
+// Allows the enemy to fire ABaseRifle.
 void AAgent::EnemyAttack()
 {
 	BaseRifle->Fire();
+}
+
+// Allows the enemy to request a reload to the ABaseRifle's ammo.
+void AAgent::EnemyReload()
+{
+	BaseRifle->RequestReload();
 }
