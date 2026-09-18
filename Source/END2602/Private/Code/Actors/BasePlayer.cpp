@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "../END2602.h"
 
+// Ctor that sets default values for ABasePlayer.
 ABasePlayer::ABasePlayer() : SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
 HUDClass(UPlayerHUD::StaticClass())
 {
@@ -23,59 +24,85 @@ HUDClass(UPlayerHUD::StaticClass())
 	Camera->SetupAttachment(SpringArm);
 }
 
+// Called when the game starts or when spawned
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Casting to APlayerController to attach the UPlayerHUD and disable/enable input to ABasePlayer
 	if (APlayerController* CastedController = Cast<APlayerController>(GetController()))
 	{
 		PlayerController = CastedController;
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("No PlayerController present in ABasePlayer!"));
+		UE_LOG(BasePlayer, Error, TEXT("No PlayerController present in ABasePlayer!"));
 		Destroy();
 	}
 
+	// Casting to UPlayerHUD to show the PlayerHUD on screen.
 	if (UPlayerHUD* CastedHUD = CreateWidget<UPlayerHUD>(PlayerController, HUDClass, ""))
 	{
 		HUDObject = CastedHUD; 
 
+		// Allows the HUDObject to be displayed onto the screen
 		HUDObject->AddToViewport();
 
-		BaseRifle->OnAmmoChanged.AddDynamic(HUDObject, &UPlayerHUD::SetAmmo);
+		BaseRifle->OnAmmoChanged.AddDynamic(HUDObject, &UPlayerHUD::SetAmmo);                                           // Updates the CurrentAmmo and MaxAmmo values from the HUD
 
 		if (HealthComponent)
 		{
-			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
-			HealthComponent->OnHealDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
-			HealthComponent->OnMuerteDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
+			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);                              // Updates the HealthBar from the HUD.
+			HealthComponent->OnHealDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);                              // Updates the HealthBar from the HUD.
+			HealthComponent->OnMuerteDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);                            // Updates the HealthBar from the HUD.
 
-			AnimInstance->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);
+			AnimInstance->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);                                      // Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after losing.
 		}
+	}
+	else
+	{
+		UE_LOG(BasePlayer, Error, TEXT("Failed to cast to a UPlayerHUD! (wrong HUDClass?)"));
 	}
 }
 
-void ABasePlayer::InputAxisMoveForward(float AxisValue)
-{
-
-	//FRotator return_val = GetControlRotation();
-	//float yaw = return_val.Yaw;
-
-	//FRotator make_rotator(0.f, yaw, 0.f);
-	//FVector world_dir = make_rotator.Vector();
-
-	// Same as above
-	// FRotator(0.f, GetControlRotation().Yaw, 0.f).Vector()
-
-	AddMovementInput(FRotator(0.f, GetControlRotation().Yaw, 0.f).Vector(), AxisValue);
-}
-
+// Allows ABasePlayer to move left or right; strafing.
 void ABasePlayer::InputAxisStrafe(float AxisValue)
 {
 	AddMovementInput(FRotationMatrix(FRotator(0.f, GetControlRotation().Yaw, 0.f)).GetUnitAxis(EAxis::Y), AxisValue);
 }
 
+// Allows ABasePlayer to move forwards and backwards.
+void ABasePlayer::InputAxisMoveForward(float AxisValue)
+{
+	AddMovementInput(FRotator(0.f, GetControlRotation().Yaw, 0.f).Vector(), AxisValue);
+}
+
+// Fires ABasePlayer's rifle.
+void ABasePlayer::Fire()
+{
+	FRotator Direction = GetBaseAimRotation();
+	BaseRifle->Fire(&Direction);
+}
+
+// Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after losing.
+void ABasePlayer::PlayerLost()
+{
+	OnPlayerLost.Broadcast(); 
+
+	// Disables the HUD and shows the cursor
+	PlayerController->bShowMouseCursor = true;
+	HUDObject->RemoveFromParent();
+}
+
+// Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after winning.
+void ABasePlayer::PlayerWon()
+{
+	// Disables the HUD and player input
+	DisableInput(PlayerController);
+	HUDObject->RemoveFromParent();
+}
+
+// Called to bind functionality to input.
 void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -95,36 +122,13 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::Reload);
 }
 
+// Rotation matrix to rotate the projectile from the rifle to the PlayerHUD's Crosshair.
 FRotator ABasePlayer::GetBaseAimRotation() const
 {
 	return FRotationMatrix::MakeFromX(HUDObject->GetDestination() - BaseRifle->GetSource()).Rotator();
 }
 
-void ABasePlayer::Fire()
-{
-	FRotator Direction = GetBaseAimRotation();
-	BaseRifle->Fire(&Direction);
-}
-
-void ABasePlayer::Reload()
-{
-	BaseRifle->RequestReload();
-}
-
-void ABasePlayer::PlayerLost()
-{
-	OnPlayerLost.Broadcast(); 
-
-	PlayerController->bShowMouseCursor = true;
-	HUDObject->RemoveFromParent();
-}
-
-void ABasePlayer::PlayerWon()
-{
-	DisableInput(PlayerController);
-	HUDObject->RemoveFromParent();
-}
-
+// Decides whether or not ABasePlayer is allowed to use the health pickup.
 bool ABasePlayer::CanPickupHealth() const
 {
 	return true;

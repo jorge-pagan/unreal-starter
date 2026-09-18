@@ -22,12 +22,12 @@ class END2602_API ABasePlayer : public ABaseCharacter
 private:
 	APlayerController* PlayerController;
 
-	void InputAxisStrafe(float AxisValue);
-	void InputAxisMoveForward(float AxisValue);
+	void InputAxisStrafe(float AxisValue);                                                                              // Allows ABasePlayer to move left or right; strafing.
+	void InputAxisMoveForward(float AxisValue);                                                                         // Allows ABasePlayer to move forwards and backwards.
 
-	void Fire();
-	void Reload();
-	UFUNCTION() void PlayerLost();
+	void Fire();                                                                                                        // Fires ABasePlayer's rifle.
+	inline void Reload() { BaseRifle->RequestReload(); }                                                                // Requests a reload to the ABaseRifle's ammo.
+	UFUNCTION() void PlayerLost();                                                                                      // Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after losing.
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;
@@ -37,22 +37,21 @@ protected:
 	UPROPERTY(EditAnywhere, Category = HUD) TSubclassOf<UUserWidget> HUDClass;
 	UPROPERTY(VisibleAnywhere, Category = HUD) UPlayerHUD* HUDObject;
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override;                                                                                  // Called when the game starts or when spawned
 
 public:
-	ABasePlayer();
-
-	void PlayerWon();
+	ABasePlayer();                                                                                                      // Ctor that sets default values for ABasePlayer.
+	
 	UPROPERTY(EditDefaultsOnly, Category = Default) FOnPlayerLost OnPlayerLost;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void PlayerWon();                                                                                                   // Broadcasts ABasePlayer's OnPlayerLost delegate and disables the HUD after winning.
 
-	virtual FRotator GetBaseAimRotation() const override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;                       // Called to bind functionality to input.
+
+	virtual FRotator GetBaseAimRotation() const override;                                                               // Rotation matrix to rotate the projectile from the rifle to the UPlayerHUD's Crosshair.
 
 	//----------------------------------------------------------------------//
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//
-    virtual bool CanPickupHealth() const override;
+    virtual bool CanPickupHealth() const override;                                                                      // Decides whether or not ABasePlayer is allowed to use the health pickup.
 };

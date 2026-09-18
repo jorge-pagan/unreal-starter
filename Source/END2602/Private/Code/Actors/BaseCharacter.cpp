@@ -26,12 +26,6 @@ ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), Weapo
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 }
 
-// Called to bind functionality to input
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
 // Called when the game starts or when spawned.
 void ABaseCharacter::BeginPlay()
 {
@@ -48,7 +42,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to convert Rifle to \"ABaseRifle\""));
+		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert Rifle to \"ABaseRifle\""));
 		return;
 	}
 
@@ -63,7 +57,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to convert AnimInstance to \"UCharacterAnimation\""));
+		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert AnimInstance to \"UCharacterAnimation\""));
 		return;
 	}
 
@@ -75,7 +69,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("No HealthComponent is present in ABaseCharacter!"));
+		UE_LOG(Game, Error, TEXT("No HealthComponent is present in ABaseCharacter!"));
 	}
 }
 
@@ -97,6 +91,13 @@ void ABaseCharacter::HandleMuerte(float NotUsed)
 	// Disables ABaseRifle
 	BaseRifle->OwnerMuerto();
 }
+
+// Called to bind functionality to input
+void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
 
 // Decides whether or not ABaseCharacter is allowed to use the health pickup.
 bool ABaseCharacter::CanPickupHealth() const

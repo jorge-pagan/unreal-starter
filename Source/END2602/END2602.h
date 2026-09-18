@@ -5,6 +5,11 @@
 #include "CoreMinimal.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(Game, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(BaseCharacter, Error, All);
+DECLARE_LOG_CATEGORY_EXTERN(BasePlayer, Error, All);
+
+DEFINE_LOG_CATEGORY(BaseCharacter);
+DEFINE_LOG_CATEGORY(BasePlayer);
 
 /*
 	Fatal
