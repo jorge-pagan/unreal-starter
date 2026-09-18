@@ -17,11 +17,14 @@ class END2602_API UCodeGameInstance : public UGameInstance
 protected:
 	int32 CurrentLevel;
 	UPROPERTY(EditDefaultsOnly) int32 FirstLevelIndex = 1;
+	UPROPERTY(EditDefaultsOnly) int32 MainMenuIndex = 0;
 	UPROPERTY(EditDefaultsOnly) TArray<FName> GameLevels;
 
 public:
 	void LoadLevel(int32 LevelIndex);
 	void LoadLevelSafe(int32 LevelIndex);
 	UFUNCTION() inline void LoadFirstLevel() { LoadLevelSafe(FirstLevelIndex); }
+	UFUNCTION() void ReloadLevel();
+	UFUNCTION() void QuitToMenu();
 	UFUNCTION() void QuitTheGame();
 };

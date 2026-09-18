@@ -38,6 +38,7 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 		UE_LOG(Game, Warning, TEXT("The level \"%s\" could not be found."), *TestURL.Map);
 		return;
 	}
+	CurrentLevel = LevelIndex;
 
 	// Allows the client to travel to the level.
 	GEngine->SetClientTravel(World, *LevelName, TravelType);
@@ -45,12 +46,18 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 
 void UCodeGameInstance::LoadLevelSafe(int32 LevelIndex)
 {
-	if (GameLevels.IsValidIndex(LevelIndex))
-	{
-		CurrentLevel = LevelIndex;
-		LoadLevel(LevelIndex);
-	}
+	if (GameLevels.IsValidIndex(LevelIndex)) LoadLevel(LevelIndex);
 	else UE_LOG(Game, Warning, TEXT("The level index (%i) is not a valid index in the game instance!"), CurrentLevel);
+}
+
+void UCodeGameInstance::ReloadLevel()
+{
+	LoadLevelSafe(CurrentLevel);
+}
+
+void UCodeGameInstance::QuitToMenu()
+{
+	LoadLevelSafe(MainMenuIndex);
 }
 
 void UCodeGameInstance::QuitTheGame()

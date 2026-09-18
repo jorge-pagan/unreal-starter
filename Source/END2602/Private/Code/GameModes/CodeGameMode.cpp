@@ -5,8 +5,10 @@
 #include "Code/Controllers/GamePlayerController.h"
 #include "Code/Actors/BasePlayer.h"
 #include "../END2602.h"
+#include "EngineUtils.h"
 
-ACodeGameMode::ACodeGameMode() : BaseCharacterClass(ABaseCharacter::StaticClass()), NumberOfEnemies(0)
+ACodeGameMode::ACodeGameMode() : BaseCharacterClass(ABaseCharacter::StaticClass()), 
+ResultsWidgetClass(UResultsHUD::StaticClass()), NumberOfEnemies(0)
 {
 	PlayerControllerClass = AGamePlayerController::StaticClass();
 	DefaultPawnClass = ABasePlayer::StaticClass();
@@ -21,6 +23,9 @@ void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 	}
 	else
 	{
+		ResultsWidgetObject->AddToViewport();
+		ResultsWidgetObject->WinConditionMet();
+
 		UE_LOG(Game, Warning, TEXT("You win!!!"));
 	}
 }
@@ -57,6 +62,14 @@ void ACodeGameMode::BeginPlay()
 				}
 			}
 
+			if (TActorIterator<AActor> It(World, PlayerControllerClass); It)
+			{
+				APlayerController* PC = Cast<APlayerController>(*It);
+				if (UResultsHUD* ResultsHUD = CreateWidget<UResultsHUD>(PC, ResultsWidgetClass))
+				{
+					ResultsWidgetObject = ResultsHUD;
+				}
+			}
 		}
 		else UE_LOG(Game, Warning, TEXT("Failed to retrieve World!"));
 	}
