@@ -23,8 +23,8 @@ void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 	}
 	else
 	{
-		ResultsWidgetObject->AddToViewport();
 		ResultsWidgetObject->WinConditionMet();
+		ResultsWidgetObject->AddToViewport();
 
 		UE_LOG(Game, Warning, TEXT("You win!!!"));
 	}
