@@ -21,7 +21,7 @@ private:
 
 	// Checks for the win condition
 	UFUNCTION() void RemoveEnemy(AActor* DestroyedActor);
-
+	UFUNCTION() void RemovePlayer();
 protected:
 	int32 NumberOfEnemies;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<AActor> BaseCharacterClass;

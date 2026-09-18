@@ -39,7 +39,7 @@ void ABasePlayer::BeginPlay()
 
 	if (UPlayerHUD* CastedHUD = CreateWidget<UPlayerHUD>(PlayerController, HUDClass, ""))
 	{
-		HUDObject = CastedHUD;
+		HUDObject = CastedHUD; 
 
 		HUDObject->AddToViewport();
 
@@ -50,6 +50,8 @@ void ABasePlayer::BeginPlay()
 			HealthComponent->OnHurtDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
 			HealthComponent->OnHealDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
 			HealthComponent->OnMuerteDelegate.AddDynamic(HUDObject, &UPlayerHUD::SetHealth);
+
+			AnimInstance->OnDeathEnded.AddDynamic(this, &ABasePlayer::PlayerLost);
 		}
 	}
 }
@@ -107,6 +109,11 @@ void ABasePlayer::Fire()
 void ABasePlayer::Reload()
 {
 	BaseRifle->RequestReload();
+}
+
+void ABasePlayer::PlayerLost()
+{
+	OnPlayerLost.Broadcast();
 }
 
 bool ABasePlayer::CanPickupHealth() const

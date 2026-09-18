@@ -25,6 +25,11 @@ void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 	}
 }
 
+void ACodeGameMode::RemovePlayer()
+{
+	UE_LOG(Game, Warning, TEXT("You suck!!!"));
+}
+
 void ACodeGameMode::BeginPlay()
 {
 	if (BaseCharacterClass)
@@ -43,6 +48,7 @@ void ACodeGameMode::BeginPlay()
 				if (ABasePlayer* BP = Cast<ABasePlayer>(Actor))
 				{
 					CurrentPlayer = BP;
+					CurrentPlayer->OnPlayerLost.AddDynamic(this, &ACodeGameMode::RemovePlayer);
 				}
 				else
 				{

@@ -9,6 +9,8 @@
 
 #include "BasePlayer.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerLost);
+
 /**
  *
  */
@@ -23,6 +25,7 @@ private:
 
 	void Fire();
 	void Reload();
+	UFUNCTION() void PlayerLost();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;
@@ -37,6 +40,8 @@ protected:
 
 public:
 	ABasePlayer();
+
+	UPROPERTY(EditDefaultsOnly, Category = Default) FOnPlayerLost OnPlayerLost;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
