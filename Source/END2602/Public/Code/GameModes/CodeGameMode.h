@@ -27,6 +27,7 @@ private:
 	UFUNCTION() void RemovePlayer();
 protected:
 	int32 NumberOfEnemies;
+	UPROPERTY(EditDefaultsOnly) EMouseLockMode PlayerLoseMenuMouseLockType = EMouseLockMode::LockAlways;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> ResultsWidgetClass;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<AActor> BaseCharacterClass;
 

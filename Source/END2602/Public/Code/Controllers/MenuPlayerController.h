@@ -19,7 +19,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> MenuClass;
-	UPROPERTY(EditDefaultsOnly) EMouseLockMode MouseLockType;
+	UPROPERTY(EditDefaultsOnly) EMouseLockMode MouseLockType = EMouseLockMode::LockAlways;
 
 	virtual void BeginPlay() override;
 };

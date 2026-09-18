@@ -27,7 +27,7 @@ private:
 
 	void Fire();
 	void Reload();
-	UFUNCTION() inline void PlayerLost() { OnPlayerLost.Broadcast(); };
+	UFUNCTION() void PlayerLost();
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Character) class USpringArmComponent* SpringArm;

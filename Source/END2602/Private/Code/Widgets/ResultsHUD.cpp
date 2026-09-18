@@ -29,7 +29,7 @@ void UResultsHUD::NativeConstruct()
 
 void UResultsHUD::WinConditionMet()
 {
-	ResultsSwitch->SetActiveWidgetIndex(WinResultsSwitchIndex);
+	ResultsSwitch->SetActiveWidgetIndex(1);
 	ButtonBox->SetVisibility(ButtonVisibilityOnWin);
 
 	FTimerHandle WinDisplayDurationTimer;

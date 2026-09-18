@@ -26,7 +26,6 @@ private:
 
 protected:
 	UCodeGameInstance* GameInstance;
-	UPROPERTY(EditDefaultsOnly) int32 WinResultsSwitchIndex = 1;
 	UPROPERTY(EditDefaultsOnly) float WinMenuDisplayDuration = 2.f;
 	UPROPERTY(EditDefaultsOnly) ESlateVisibility ButtonVisibilityOnWin = ESlateVisibility::Hidden;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UWidgetSwitcher* ResultsSwitch;

@@ -29,6 +29,17 @@ void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
 
 void ACodeGameMode::RemovePlayer()
 {
+	ResultsWidgetObject->AddToViewport();
+	
+	// Locking the mouse to the Results Widget
+	FInputModeUIOnly InputMode;
+	InputMode.SetLockMouseToViewportBehavior(PlayerLoseMenuMouseLockType);
+	InputMode.SetWidgetToFocus(ResultsWidgetObject->TakeWidget());
+
+	// Setting the input mode and flushing any pressed keys after menu loads
+	ResultsWidgetObject->GetOwningPlayer()->SetInputMode(InputMode);
+	ResultsWidgetObject->GetOwningPlayer()->FlushPressedKeys();
+
 	UE_LOG(Game, Warning, TEXT("You suck!!!"));
 }
 

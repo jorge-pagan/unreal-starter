@@ -5,7 +5,7 @@
 #include "Code/Widgets/MainMenuHUD.h"
 
 AMenuPlayerController::AMenuPlayerController() : 
-	MenuClass(UMainMenuHUD::StaticClass()), MouseLockType(EMouseLockMode::LockAlways)
+	MenuClass(UMainMenuHUD::StaticClass())
 {
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;

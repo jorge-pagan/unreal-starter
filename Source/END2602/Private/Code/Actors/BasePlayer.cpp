@@ -111,6 +111,14 @@ void ABasePlayer::Reload()
 	BaseRifle->RequestReload();
 }
 
+void ABasePlayer::PlayerLost()
+{
+	OnPlayerLost.Broadcast(); 
+
+	PlayerController->bShowMouseCursor = true;
+	HUDObject->RemoveFromParent();
+}
+
 void ABasePlayer::PlayerWon()
 {
 	DisableInput(PlayerController);
