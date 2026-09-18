@@ -4,18 +4,25 @@
 #include "Code/Actors/BaseCharacter.h"
 #include "../END2602.h"
 
-// Sets default values
+// Ctor that sets default values for ABaseCharacter.
 ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), WeaponSocketName(TEXT("WeaponSocket"))
 {
+	// Disables ticking
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
+	// Sets position of the character mesh
 	GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -90.0));
 	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 
+	// BaseRifle component creation
 	BaseRifleChildComponent = CreateDefaultSubobject<UChildActorComponent>("BaseRifleChildComponent");
 	BaseRifleChildComponent->SetChildActorClass(WeaponClass);
+	// Attaching to the mesh component
+	BaseRifleChildComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, 
+		                                       WeaponSocketName);
 
+	// Health cmponent creation
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 }
 
@@ -25,7 +32,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-// Called when the game starts or when spawned
+// Called when the game starts or when spawned.
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -33,10 +40,6 @@ void ABaseCharacter::BeginPlay()
 	// Setting Child Class
 	BaseRifleChildComponent->bEditableWhenInherited = true;
 	BaseRifleChildComponent->SetChildActorClass(WeaponClass);
-
-	// Attaching to the Mesh Component
-	BaseRifleChildComponent->AttachToComponent(GetMesh(),FAttachmentTransformRules::KeepRelativeTransform, 
-		                                       WeaponSocketName);
 
 	// Casting to ABaseRifle to be able to fire
 	if (ABaseRifle* CastedRifle = BaseRifle ? BaseRifle : Cast<ABaseRifle>(BaseRifleChildComponent->GetChildActor()))
@@ -49,14 +52,14 @@ void ABaseCharacter::BeginPlay()
 		return;
 	}
 
-	// Casting AnimInstance to UCharacterAnimation
+	// Casting to UCharacterAnimation to use its functions and set its delegates
 	if (UCharacterAnimation* CastedAnimInstance = Cast<UCharacterAnimation>(GetMesh()->GetAnimInstance()))
 	{
 		AnimInstance = CastedAnimInstance;
-		BaseRifle->OnRifleFireDelegate.AddDynamic(AnimInstance, &UCharacterAnimation::FireAnimation);
-		BaseRifle->OnReloadStart.AddDynamic(AnimInstance, &UCharacterAnimation::ReloadAnimation);
-		AnimInstance->OnReloadNow.AddDynamic(BaseRifle, &ABaseRifle::ReloadAmmo);
-		AnimInstance->OnReloadEnded.AddDynamic(BaseRifle, &ABaseRifle::ActionStopped);
+		BaseRifle->OnRifleFireDelegate.AddDynamic(AnimInstance, &UCharacterAnimation::FireAnimation);                   // Plays the FireAnimation when the rifle is fired.
+		BaseRifle->OnReloadStart.AddDynamic(AnimInstance, &UCharacterAnimation::ReloadAnimation);                       // Plays the ReloadAnimation when the reload key is pressed.
+		AnimInstance->OnReloadNow.AddDynamic(BaseRifle, &ABaseRifle::ReloadAmmo);                                       // Refills the CurrentAmmo and broadcasts ABaseRifle's OnAmmoChanged delegate.
+		AnimInstance->OnReloadEnded.AddDynamic(BaseRifle, &ABaseRifle::ActionStopped);                                  // Allows the rifle to fire again and broadcasts ABaseRifle's OnActionStopped delegate.
 	}
 	else
 	{
@@ -64,10 +67,11 @@ void ABaseCharacter::BeginPlay()
 		return;
 	}
 
+	// Sets the HealthComponent delegates
 	if (HealthComponent)
 	{
-		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);
-		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);
+		HealthComponent->OnHurtDelegate.AddDynamic(this, &ABaseCharacter::HandleHurt);                                  // Triggers the hit animation for the ABaseCharacter.
+		HealthComponent->OnMuerteDelegate.AddDynamic(this, &ABaseCharacter::HandleMuerte);                              // Triggers the death animation and disables input for the ABaseCharacter.
 	}
 	else
 	{
@@ -75,20 +79,26 @@ void ABaseCharacter::BeginPlay()
 	}
 }
 
+// Triggers the hit animation for the ABaseCharacter.
 void ABaseCharacter::HandleHurt(float NotUsed)
 {
 	AnimInstance->HitAnimation();
 }
 
+// Triggers the death animation and disables input for the ABaseCharacter.
 void ABaseCharacter::HandleMuerte(float NotUsed)
 {
 	AnimInstance->MuerteAnimation();
-
 	SetActorEnableCollision(true);
+
+	// Disables movement input
 	DisableInput(nullptr);
+
+	// Disables ABaseRifle
 	BaseRifle->OwnerMuerto();
 }
 
+// Decides whether or not ABaseCharacter is allowed to use the health pickup.
 bool ABaseCharacter::CanPickupHealth() const
 {
 	return false;

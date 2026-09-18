@@ -18,10 +18,9 @@ class END2602_API ABaseCharacter : public ACharacter, public IPickupQueriesInter
 	GENERATED_BODY()
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override;                                                                                  // Called when the game starts or when spawned.
 
-	UPROPERTY(EditDefaultsOnly, Category = Default) UChildActorComponent* BaseRifleChildComponent;
+	UPROPERTY(EditDefaultsOnly, Category = Default) UChildActorComponent* BaseRifleChildComponent;                    
 	UPROPERTY(EditDefaultsOnly, Category = Default) ABaseRifle* BaseRifle;
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> WeaponClass;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName WeaponSocketName;
@@ -29,18 +28,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) UStaticMesh* ProjectileMesh;
 	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
 
-	UFUNCTION() virtual void HandleHurt(float NotUsed);
-	UFUNCTION() virtual void HandleMuerte(float NotUsed);
+	UFUNCTION() virtual void HandleHurt(float NotUsed);                                                                 // Triggers the hit animation for the ABaseCharacter.
+	UFUNCTION() virtual void HandleMuerte(float NotUsed);                                                               // Triggers the death animation and disables input for the ABaseCharacter.
 
 public:
-	// Sets default values for this character's properties
-	ABaseCharacter();
+	ABaseCharacter();                                                                                                   // Ctor that sets default values for ABaseCharacter.
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;                       // Called to bind functionality to the input.
 
 	//----------------------------------------------------------------------//
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//
-	virtual bool CanPickupHealth() const override;
+	virtual bool CanPickupHealth() const override;                                                                      // Decides whether or not ABaseCharacter is allowed to use the health pickup.
 };
