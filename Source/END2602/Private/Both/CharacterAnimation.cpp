@@ -11,11 +11,6 @@ ActionSlotName("Action"), CurrentMuerteAsset(nullptr)
 
 }
 
-void UCharacterAnimation::MuerteEnded()
-{
-
-}
-
 void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
@@ -70,11 +65,14 @@ void UCharacterAnimation::HitAnimation()
 void UCharacterAnimation::MuerteAnimation_Implementation(float Percent)
 {
 	// The modulo sign prevents Rand from going above Array.Num() - 1!
-	if (!MuerteAssets.IsEmpty()) CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
+	if (!MuerteAssets.IsEmpty())
+	{
+    	FTimerHandle DeathEndedTimer;
+		CurrentMuerteAsset = MuerteAssets[FMath::Rand() % MuerteAssets.Num()];
 
-	FTimerHandle DeathEndedTimer;
-	GetWorld()->GetTimerManager().SetTimer(DeathEndedTimer, this, &UCharacterAnimation::MuerteEnded, 
-		                                   CurrentMuerteAsset->GetPlayLength());
+	    GetWorld()->GetTimerManager().SetTimer(DeathEndedTimer, this, &UCharacterAnimation::MuerteEnded,
+		       								   CurrentMuerteAsset->GetPlayLength());
+	}
 }
 
 void UCharacterAnimation::ReloadAnimation()

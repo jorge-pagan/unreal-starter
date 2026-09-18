@@ -9,7 +9,7 @@
 
 #include "CharacterAnimation.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnimationEvent);
 
 /**
  *
@@ -22,7 +22,8 @@ class END2602_API UCharacterAnimation : public UAnimInstance, public IHandleRelo
 private:
 	UCharacterAnimation();
 
-	void MuerteEnded();
+	
+	inline void MuerteEnded() { OnDeathEnded.Broadcast(); }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugFire;
@@ -40,8 +41,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* ReloadAsset;
 
 public:
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReload OnReloadNow;
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnReload OnReloadEnded;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnAnimationEvent OnReloadNow;
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnAnimationEvent OnReloadEnded;
+	
+	// Removes the Agent after death animation ends
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnAnimationEvent OnDeathEnded;
 
 	void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 

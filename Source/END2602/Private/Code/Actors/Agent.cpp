@@ -50,6 +50,8 @@ void AAgent::BeginPlay()
 
 	BaseRifle->OnActionStopped.AddDynamic(this, &AAgent::HandleActionFinished);
 	BaseRifle->OnAmmoChanged.AddDynamic(this, &AAgent::UpdateBlackboardAmmo);
+
+	AnimInstance->OnDeathEnded.AddDynamic(this, &AActor::K2_DestroyActor); 
 }
 
 void AAgent::HandleHurt(float Ratio)
