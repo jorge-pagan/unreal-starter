@@ -10,12 +10,10 @@ void UResultsHUD::NativeConstruct()
 
 	if (UCodeGameInstance* GI = Cast<UCodeGameInstance>(GetGameInstance()))
 	{
-		GameInstance = GI;
-
 		if (PlayAgainButton && MainMenuButton)
 		{
-			PlayAgainButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::ReloadLevel);
-			MainMenuButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::QuitToMenu);
+			PlayAgainButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::ReloadLevel);
+			MainMenuButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::QuitToMenu);
 		}
 		else UE_LOG(ResultsHUD, Error, TEXT("PlayAgainButton and/or MainMenuButton not bound to the widget!"));
 	}

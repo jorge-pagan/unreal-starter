@@ -22,8 +22,6 @@ class END2602_API UResultsHUD : public UUserWidget
 	GENERATED_BODY()
 
 private:
-	UCodeGameInstance* GameInstance;
-
 	void LoadMainMenu();
 
 protected:
