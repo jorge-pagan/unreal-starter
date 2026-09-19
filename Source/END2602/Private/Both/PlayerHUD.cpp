@@ -10,6 +10,7 @@ void UPlayerHUD::PostLoad()
 {
 	Super::PostLoad();
 
+	EndPoint = FVector::Zero();
 	ColorName = TEXT("Color");
 	SafeColor = FLinearColor(0.f, 0.35f, 1.f, 1.f);
 	DangerColor = FLinearColor(0.85f, 0.1f, 0.1f, 1.f);
@@ -21,7 +22,20 @@ void UPlayerHUD::PostLoad()
 bool UPlayerHUD::Initialize()
 {
 	bool r = Super::Initialize();
-	DynamicMaterial = Crosshair ? Crosshair->GetDynamicMaterial() : nullptr;
+	if (!HealthBar) UE_LOG(PlayerHUD, Error, TEXT("HealthBar not bound to widget!"));
+
+	if (Crosshair)
+	{
+		DynamicMaterial = Crosshair->GetDynamicMaterial();
+	}
+	else
+	{
+		DynamicMaterial = nullptr;
+		UE_LOG(PlayerHUD, Error, TEXT("Crosshair not bound to widget!"));
+	}
+
+	if (!CurrentAmmo || !MaxAmmo) UE_LOG(PlayerHUD, Error, TEXT("CurrentAmmo and/or MaxAmmo not bound to widget!"));
+
 	return r;
 }
 

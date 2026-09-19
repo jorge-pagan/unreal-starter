@@ -6,7 +6,7 @@
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
-UFindLocation::UFindLocation() : Radius(300.f), KeyName("Location") {} // Default value given to these variables
+UFindLocation::UFindLocation() : KeyName("Location") {}
 
 EBTNodeResult::Type UFindLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -23,7 +23,7 @@ EBTNodeResult::Type UFindLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 		FinishLatentTask(OwnerComp, r);
 	}
-	else UE_LOG(Game, Warning, TEXT("There is no navigation system present in the world"));
+	else UE_LOG(FindLocation, Warning, TEXT("No navigation system present in the world!"));
 
 	return r;
 }

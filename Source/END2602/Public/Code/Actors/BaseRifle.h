@@ -15,7 +15,7 @@ class END2602_API ABaseRifle : public AActor
 	GENERATED_BODY()
 
 private:
-	float CurrentAmmo;
+	float CurrentAmmo = 0.f;
 	bool Alive = true;
 	bool ActionHappening = false;
 
@@ -25,13 +25,12 @@ protected:
 	// Don't forget to set the BaseCharacter's WeaponClass object to BP_CodeBaseRifle in the editor 
 	// (and not this ABaseRifle class)
 
-	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo;
-	UPROPERTY(EditDefaultsOnly, Category = Default) float FireDelay;
+	UPROPERTY(EditDefaultsOnly, Category = Default) float MaxAmmo = 3.f;
+	UPROPERTY(EditDefaultsOnly, Category = Default) float FireDelay = 0.7f;
 	UPROPERTY(VisibleAnywhere, Category = Default) APawn* Parent;
 	UPROPERTY(VisibleAnywhere, Category = Default) USkeletalMeshComponent* SkeletalMesh;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ProjectileSpawnSocketName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> ProjectileClass;
-
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

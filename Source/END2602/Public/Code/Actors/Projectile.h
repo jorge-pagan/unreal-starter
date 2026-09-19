@@ -11,9 +11,12 @@ class END2602_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 
-public:
-	// Sets default values for this actor's properties
-	AProjectile();
+private:
+	AController* OwnerController;
+
+	UFUNCTION() void HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+		                           UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
+		                           bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
 	// Called when the game starts or when spawned
@@ -22,18 +25,15 @@ protected:
 	// Don't forget to set the BP_BaseRifle's ProjectileClass object to BP_CodeProjectile in the editor
 	// (and not the AProjectile class)
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Damage;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) float ProjectileDespawnDelay;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) float Damage = 1.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) float ProjectileDespawnDelay = 3.f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) class UProjectileMovementComponent* ProjectileMovement;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) class USphereComponent* SphereCollision;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) class UStaticMeshComponent* SphereMesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FVector SphereSize;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) FVector CollisionRelativeScale;
 
-private:
-	AController* OwnerController;
-
-	UFUNCTION() void HandleOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
-		                           UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
-		                           bool bFromSweep, const FHitResult& SweepResult);
+public:
+	// Sets default values for this actor's properties
+	AProjectile();
 };

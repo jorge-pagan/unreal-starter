@@ -23,13 +23,13 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) class UProgressBar* HealthBar;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UImage* Crosshair;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) UMaterialInstanceDynamic* DynamicMaterial;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) UMaterialInstanceDynamic* DynamicMaterial = nullptr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FVector EndPoint;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FName ColorName;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FLinearColor SafeColor;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite) FLinearColor DangerColor;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) UTextBlock* CurrentAmmo;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly) UTextBlock* MaxAmmo;
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget)) UTextBlock* CurrentAmmo;
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget)) UTextBlock* MaxAmmo;
 
 	FCollisionObjectQueryParams ObjectTypes;
 

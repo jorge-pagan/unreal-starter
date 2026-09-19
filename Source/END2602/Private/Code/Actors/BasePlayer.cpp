@@ -10,7 +10,7 @@
 ABasePlayer::ABasePlayer() : SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
 HUDClass(UPlayerHUD::StaticClass())
 {
-	// Tick already disabled by the ABaseCharacter
+	// Tick already disabled
 
 	// Initialization
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("springArm");

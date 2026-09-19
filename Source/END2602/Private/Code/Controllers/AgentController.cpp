@@ -36,7 +36,7 @@ void AAgentController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 
 	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAgentController::HandlePerception);
-	RunBehaviorTree(BTAsset);
+	if (BTAsset) RunBehaviorTree(BTAsset);
 }
 
 void AAgentController::HandlePerception(AActor* ActorInView, FAIStimulus Stimulus)

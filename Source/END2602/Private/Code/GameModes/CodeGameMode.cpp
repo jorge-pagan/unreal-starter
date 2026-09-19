@@ -14,35 +14,6 @@ ResultsWidgetClass(UResultsHUD::StaticClass()), NumberOfEnemies(0)
 	DefaultPawnClass = ABasePlayer::StaticClass();
 }
 
-void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
-{
-	NumberOfEnemies = FMath::Max(0, NumberOfEnemies - 1);
-	if (NumberOfEnemies == 0)
-	{
-		ResultsWidgetObject->WinConditionMet();
-		ResultsWidgetObject->AddToViewport();
-		CurrentPlayer->PlayerWon();
-
-		UE_LOG(Game, Warning, TEXT("You win!!!"));
-	}
-}
-
-void ACodeGameMode::RemovePlayer()
-{
-	ResultsWidgetObject->AddToViewport();
-	
-	// Locking the mouse to the Results Widget
-	FInputModeUIOnly InputMode;
-	InputMode.SetLockMouseToViewportBehavior(PlayerLoseMenuMouseLockType);
-	InputMode.SetWidgetToFocus(ResultsWidgetObject->TakeWidget());
-
-	// Setting the input mode and flushing any pressed keys after menu loads
-	ResultsWidgetObject->GetOwningPlayer()->SetInputMode(InputMode);
-	ResultsWidgetObject->GetOwningPlayer()->FlushPressedKeys();
-
-	UE_LOG(Game, Warning, TEXT("You suck!!!"));
-}
-
 void ACodeGameMode::BeginPlay()
 {
 	if (BaseCharacterClass)
@@ -73,13 +44,42 @@ void ACodeGameMode::BeginPlay()
 			if (TActorIterator<AActor> It(World, PlayerControllerClass); It)
 			{
 				APlayerController* PC = Cast<APlayerController>(*It);
-				if (UResultsHUD* ResultsHUD = CreateWidget<UResultsHUD>(PC, ResultsWidgetClass))
+				if (UResultsHUD* ResultHUD = CreateWidget<UResultsHUD>(PC, ResultsWidgetClass))
 				{
-					ResultsWidgetObject = ResultsHUD;
+					ResultsWidgetObject = ResultHUD;
 				}
 			}
 		}
-		else UE_LOG(Game, Warning, TEXT("Failed to retrieve World!"));
+		else UE_LOG(CodeGameMode, Error, TEXT("Failed to retrieve World!"));
 	}
-	else UE_LOG(Game, Warning, TEXT("BaseCharacterClass is not initialized!"));
+	else UE_LOG(CodeGameMode, Error, TEXT("BaseCharacterClass is not initialized!"));
+}
+
+void ACodeGameMode::RemoveEnemy(AActor* DestroyedActor)
+{
+	NumberOfEnemies = FMath::Max(0, NumberOfEnemies - 1);
+	if (NumberOfEnemies == 0)
+	{
+		ResultsWidgetObject->WinConditionMet();
+		ResultsWidgetObject->AddToViewport();
+		CurrentPlayer->PlayerWon();
+
+		UE_LOG(CodeGameMode, Warning, TEXT("You win!!!"));
+	}
+}
+
+void ACodeGameMode::RemovePlayer()
+{
+	ResultsWidgetObject->AddToViewport();
+	
+	// Locking the mouse to the Results Widget
+	FInputModeUIOnly InputMode;
+	InputMode.SetLockMouseToViewportBehavior(PlayerLoseMenuMouseLockType);
+	InputMode.SetWidgetToFocus(ResultsWidgetObject->TakeWidget());
+
+	// Setting the input mode and flushing any pressed keys after menu loads
+	ResultsWidgetObject->GetOwningPlayer()->SetInputMode(InputMode);
+	ResultsWidgetObject->GetOwningPlayer()->FlushPressedKeys();
+
+	UE_LOG(CodeGameMode, Warning, TEXT("You suck!!!"));
 }

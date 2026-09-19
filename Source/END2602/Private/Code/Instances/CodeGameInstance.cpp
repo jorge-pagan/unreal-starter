@@ -10,12 +10,12 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 
 	if (!World)
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to retrieve world!"));
+		UE_LOG(CodeGameInstance, Error, TEXT("Failed to retrieve world!"));
 		return;
 	}
 	else if (!GEngine)
 	{
-		UE_LOG(Game, Warning, TEXT("GEngine is nullptr!"));
+		UE_LOG(CodeGameInstance, Error, TEXT("GEngine is nullptr!"));
 		return;
 	}
 
@@ -25,7 +25,7 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 	// Retrieving level name
 	if (GameLevels.Num() == 0)
 	{
-		UE_LOG(Game, Warning, TEXT("No levels are present in the GameLevels array from the GameInstance."));
+		UE_LOG(CodeGameInstance, Error, TEXT("No levels are present in the GameLevels array from the GameInstance!"));
 		return;
 	}
 
@@ -35,7 +35,7 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 	FURL TestURL(&WorldContext->LastURL, *LevelName, TravelType);
 	if (TestURL.IsLocalInternal() && !GEngine->MakeSureMapNameIsValid(TestURL.Map))
 	{
-		UE_LOG(Game, Warning, TEXT("The level \"%s\" could not be found."), *TestURL.Map);
+		UE_LOG(CodeGameInstance, Error, TEXT("The level \"%s\" could not be found!"), *TestURL.Map);
 		return;
 	}
 	CurrentLevel = LevelIndex;
@@ -47,7 +47,7 @@ void UCodeGameInstance::LoadLevel(int32 LevelIndex)
 void UCodeGameInstance::LoadLevelSafe(int32 LevelIndex)
 {
 	if (GameLevels.IsValidIndex(LevelIndex)) LoadLevel(LevelIndex);
-	else UE_LOG(Game, Warning, TEXT("The level index (%i) is not a valid index in the game instance!"), CurrentLevel);
+	else UE_LOG(CodeGameInstance, Error, TEXT("The level index (%i) is not a valid index in the game instance!"), CurrentLevel);
 }
 
 void UCodeGameInstance::ReloadLevel()
@@ -66,12 +66,12 @@ void UCodeGameInstance::QuitTheGame()
 
 	if (!World)
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to retrieve world!"));
+		UE_LOG(CodeGameInstance, Error, TEXT("Failed to retrieve world!"));
 		return;
 	}
 	else if (World->GetGameInstance() != this) // Also checks if GameInstance is nullptr. "this" can never be nullptr.
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to retrieve game instance or not using the same game instance!"));
+		UE_LOG(CodeGameInstance, Error, TEXT("Failed to retrieve game instance or not using the same game instance!"));
 	}
 
 	// Retrieve the controller and send the shutdown command to it

@@ -4,12 +4,6 @@
 #include "Code/Widgets/ResultsHUD.h"
 #include "../END2602.h"
 
-void UResultsHUD::LoadMainMenu()
-{
-	// Hack that does the travel logic for us to enter the main menu
-	MainMenuButton->OnBackgroundButtonClicked.Broadcast();
-}
-
 void UResultsHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -18,13 +12,23 @@ void UResultsHUD::NativeConstruct()
 	{
 		GameInstance = GI;
 
-		PlayAgainButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::ReloadLevel);
-		MainMenuButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::QuitToMenu);
+		if (PlayAgainButton && MainMenuButton)
+		{
+			PlayAgainButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::ReloadLevel);
+			MainMenuButton->OnBackgroundButtonClicked.AddDynamic(GameInstance, &UCodeGameInstance::QuitToMenu);
+		}
+		else UE_LOG(ResultsHUD, Error, TEXT("PlayAgainButton and/or MainMenuButton not bound to the widget!"));
 	}
-	else
-	{
-		UE_LOG(Game, Warning, TEXT("Failed to retrieve game instance or not using the correct game instance!"));
-	}
+	else UE_LOG(ResultsHUD, Error, TEXT("Failed to retrieve game instance or not using the correct game instance!"));
+
+	if (!ResultsSwitch) UE_LOG(ResultsHUD, Error, TEXT("ResultsSwitch not bound to the widget!"));
+	if (!ButtonBox) UE_LOG(ResultsHUD, Error, TEXT("ButtonBox not bound to the widget!"));
+}
+
+void UResultsHUD::LoadMainMenu()
+{
+	// Hack that does the travel logic for us to enter the main menu
+	MainMenuButton->OnBackgroundButtonClicked.Broadcast();
 }
 
 void UResultsHUD::WinConditionMet()

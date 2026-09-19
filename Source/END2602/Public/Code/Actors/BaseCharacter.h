@@ -25,7 +25,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) TSubclassOf<AActor> WeaponClass;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName WeaponSocketName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) UCharacterAnimation* AnimInstance;
-	UPROPERTY(EditDefaultsOnly, Category = Default) UStaticMesh* ProjectileMesh;
 	UPROPERTY(EditDefaultsOnly, Category = Default) UHealthComponent* HealthComponent;
 
 	UFUNCTION() virtual void HandleHurt(float NotUsed);                                                                 // Triggers the hit animation for the ABaseCharacter.

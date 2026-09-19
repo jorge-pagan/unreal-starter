@@ -5,10 +5,16 @@
 #include "KismetAnimationLibrary.h"
 #include "../END2602.h"
 
-UCharacterAnimation::UCharacterAnimation() : DebugFire(false), DebugHit(false), DebugMuerte(false),
-ActionSlotName("Action"), CurrentMuerteAsset(nullptr)
-{
+UCharacterAnimation::UCharacterAnimation() : ActionSlotName("Action") {}
 
+void UCharacterAnimation::NativeBeginPlay()
+{
+	Super::NativeBeginPlay();
+
+	if (!FireAsset) UE_LOG(CharacterAnimation, Error, TEXT("FireAsset is missing!"));
+	if (!HitAsset) UE_LOG(CharacterAnimation, Error, TEXT("HitAsset is missing!"));
+	if (MuerteAssets.IsEmpty()) UE_LOG(CharacterAnimation, Error, TEXT("MuerteAssets has no elements!"));
+	if (!ReloadAsset) UE_LOG(CharacterAnimation, Error, TEXT("ReloadAsset is missing!"));
 }
 
 void UCharacterAnimation::NativeThreadSafeUpdateAnimation(float DeltaSeconds)

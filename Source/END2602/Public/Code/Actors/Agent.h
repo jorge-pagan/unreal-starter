@@ -30,7 +30,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName HealthRatioKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName AmmoKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
-	UPROPERTY(EditDefaultsOnly, Category = Default) int MaterialIndex;
 
 	void PostLoad() override;                                                                                           // Called after loading the level and starting the game; runs before BeginPlay.
 

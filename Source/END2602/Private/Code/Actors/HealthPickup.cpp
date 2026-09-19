@@ -27,7 +27,7 @@ bool AHealthPickup::CanPickup(AActor* OtherActor) const
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("Overlapped actor from AHealthPickup does not have an IPickupQueriesInterface"));
+		UE_LOG(HealthPickup, Error, TEXT("Overlapped actor from AHealthPickup does not have an IPickupQueriesInterface!"));
 	}
 
 	return false;

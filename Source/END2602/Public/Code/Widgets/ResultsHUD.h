@@ -22,10 +22,11 @@ class END2602_API UResultsHUD : public UUserWidget
 	GENERATED_BODY()
 
 private:
+	UCodeGameInstance* GameInstance;
+
 	void LoadMainMenu();
 
 protected:
-	UCodeGameInstance* GameInstance;
 	UPROPERTY(EditDefaultsOnly) float WinMenuDisplayDuration = 2.f;
 	UPROPERTY(EditDefaultsOnly) ESlateVisibility ButtonVisibilityOnWin = ESlateVisibility::Hidden;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UWidgetSwitcher* ResultsSwitch;

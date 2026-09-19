@@ -6,8 +6,7 @@
 #include "../END2602.h"
 
 // Sets default values
-ABaseRifle::ABaseRifle() : ProjectileClass(AProjectile::StaticClass()), ProjectileSpawnSocketName("MuzzleFlashSocket"),
-FireDelay(0.7f)
+ABaseRifle::ABaseRifle() : ProjectileClass(AProjectile::StaticClass()), ProjectileSpawnSocketName("MuzzleFlashSocket")
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
@@ -28,7 +27,7 @@ void ABaseRifle::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(Game, Warning, TEXT("Failed to convert parent actor to pawn. Need a pawn to own this rifle."));
+		UE_LOG(BaseRifle, Error, TEXT("Failed to convert parent actor to pawn! Need a pawn to own this rifle!"));
 		Destroy();
 	}
 

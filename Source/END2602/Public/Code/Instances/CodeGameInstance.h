@@ -15,7 +15,7 @@ class END2602_API UCodeGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 protected:
-	int32 CurrentLevel;
+	int32 CurrentLevel = 0;
 	UPROPERTY(EditDefaultsOnly) int32 FirstLevelIndex = 1;
 	UPROPERTY(EditDefaultsOnly) int32 MainMenuIndex = 0;
 	UPROPERTY(EditDefaultsOnly) TArray<FName> GameLevels;

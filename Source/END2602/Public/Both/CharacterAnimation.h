@@ -22,18 +22,17 @@ class END2602_API UCharacterAnimation : public UAnimInstance, public IHandleRelo
 private:
 	UCharacterAnimation();
 
-	
 	inline void MuerteEnded() { OnDeathEnded.Broadcast(); }
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugFire;
-	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugHit;
-	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugMuerte;
-	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugReload;
+	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugFire = false;
+	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugHit = false;
+	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugMuerte = false;
+	UPROPERTY(EditDefaultsOnly, Category = Default) bool DebugReload = false;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionSlotName;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Speed;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Direction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Speed = 0;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) float Direction = 0;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* FireAsset;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* HitAsset;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Default) UAnimSequence* CurrentMuerteAsset;
@@ -46,6 +45,8 @@ public:
 	
 	// Removes the Agent after death animation ends
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Default) FOnAnimationEvent OnDeathEnded;
+
+	virtual void NativeBeginPlay() override;
 
 	void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 

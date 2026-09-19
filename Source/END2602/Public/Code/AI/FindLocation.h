@@ -18,7 +18,7 @@ class END2602_API UFindLocation : public UBTTaskNode
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = Default) float Radius;
+	UPROPERTY(EditDefaultsOnly, Category = Default) float Radius = 300.f;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName KeyName;
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;

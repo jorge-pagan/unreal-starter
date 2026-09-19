@@ -16,7 +16,7 @@ class END2602_API UHealthComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(EditAnywhere, Category = Default) float CurrentHealth;
+	UPROPERTY(EditAnywhere, Category = Default) float CurrentHealth = 0.f;
 
 	UFUNCTION() void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 		                          class AController* InstigatedBy, AActor* DamageCauser);
@@ -29,7 +29,7 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
-	UPROPERTY(EditAnywhere, Category = Default) float MaxHealth;
+	UPROPERTY(EditAnywhere, Category = Default) float MaxHealth = 5.f;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnHurtDelegate;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnHealDelegate;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = Variable) FOnChangeHealth OnMuerteDelegate;

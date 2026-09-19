@@ -4,7 +4,7 @@
 #include "Code/Actors/DamagePickup.h"
 #include "Engine/DamageEvents.h"
 
-ADamagePickup::ADamagePickup() : DamageAmount(-2.f)
+ADamagePickup::ADamagePickup()
 {
 	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>("ParticleSystem");
 	
@@ -29,5 +29,5 @@ void ADamagePickup::HandlePickup(AActor* OtherActor, const FHitResult& SweepResu
 
 void ADamagePickup::PostPickup()
 {
-	// Left empty to not call Destroy() in the ABasePickup::PostPickup()
+	// Overridden and left empty to not call Destroy() in the ABasePickup::PostPickup()
 }

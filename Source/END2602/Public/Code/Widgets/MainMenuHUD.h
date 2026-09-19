@@ -6,6 +6,7 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Both/ButtonWithText.h"
+#include "Code/Instances/CodeGameInstance.h"
 
 #include "MainMenuHUD.generated.h"
 
@@ -16,18 +17,20 @@ UCLASS()
 class END2602_API UMainMenuHUD : public UUserWidget
 {
 	GENERATED_BODY()
-
-public:
-	UFUNCTION() inline void LoadFirstGame_Wrapper() { GameInstance->LoadFirstLevel(); }
-	UFUNCTION() inline void QuitTheGame_Wrapper() { GameInstance->QuitTheGame(); }
 	
+private:
+	UCodeGameInstance* GameInstance;
+
 protected:
 	// Remember to set the BP_CodeMenuPlayerController's MenuObject to the WBP in the editor (and not UMainMenuHUD)
 	
-	UCodeGameInstance* GameInstance;
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UButtonWithText* PlayButton;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget)) UButtonWithText* QuitButton;
 
 	virtual void NativeConstruct() override;
+
+public:
+	UFUNCTION() inline void LoadFirstGame_Wrapper() { GameInstance->LoadFirstLevel(); }
+	UFUNCTION() inline void QuitTheGame_Wrapper() { GameInstance->QuitTheGame(); }
 };

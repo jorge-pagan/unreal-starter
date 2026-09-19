@@ -2,7 +2,6 @@
 
 
 #include "Code/Widgets/MainMenuHUD.h"
-#include "Code/Instances/CodeGameInstance.h"
 #include "../END2602.h"
 
 void UMainMenuHUD::NativeConstruct()
@@ -11,8 +10,12 @@ void UMainMenuHUD::NativeConstruct()
 
 	if (UCodeGameInstance* GI = Cast<UCodeGameInstance>(GetGameInstance()))
 	{
-		PlayButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::LoadFirstLevel);
-		QuitButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::QuitTheGame);
+		if (PlayButton && QuitButton)
+		{
+			PlayButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::LoadFirstLevel);
+			QuitButton->OnBackgroundButtonClicked.AddDynamic(GI, &UCodeGameInstance::QuitTheGame);
+		}
+		else UE_LOG(MainMenuHUD, Error, TEXT("PlayButton and/or QuitButton not bound to the widget!"));
 	}
-	else UE_LOG(Game, Warning, TEXT("Failed to cast the GameInstance because of an incorrect socketed GameInstance!"));
+	else UE_LOG(MainMenuHUD, Error, TEXT("Failed to cast the GameInstance because of an incorrect socketed GameInstance!"));
 }

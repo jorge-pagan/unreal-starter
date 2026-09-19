@@ -9,8 +9,7 @@
 #include "../END2602.h"
 
 // Sets default values
-AProjectile::AProjectile() : ProjectileDespawnDelay(3.f), CollisionRelativeScale(FVector(0.18, 0.18, 0.18)),
-SphereSize(FVector(0.6, 0.6, 0.6)), Damage(1.f)
+AProjectile::AProjectile() : CollisionRelativeScale(FVector(0.18, 0.18, 0.18)), SphereSize(FVector(0.6, 0.6, 0.6))
 {
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
@@ -43,7 +42,7 @@ void AProjectile::BeginPlay()
 	if (AController* CastedController = Cast<AController>(GetOwner()))
 		OwnerController = CastedController;
 	else
-		UE_LOG(Game, Warning, TEXT("Owner needs to be a controller"));
+		UE_LOG(Projectile, Error, TEXT("Owner needs to be a controller!"));
 
 	FTimerHandle ProjectileTimer;
 	GetWorld()->GetTimerManager().SetTimer(ProjectileTimer, this,

@@ -18,7 +18,7 @@ class END2602_API ADamagePickup : public ABasePickup
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly) float DamageAmount;
+	UPROPERTY(EditDefaultsOnly) float DamageAmount = -2.f;
 	UPROPERTY(EditDefaultsOnly) UParticleSystemComponent* ParticleSystem;
 
 	virtual void HandlePickup(AActor* OtherActor, const FHitResult& SweepResult) override;

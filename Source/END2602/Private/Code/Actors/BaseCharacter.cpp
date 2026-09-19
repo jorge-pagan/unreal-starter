@@ -42,7 +42,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert Rifle to \"ABaseRifle\""));
+		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert Rifle to \"ABaseRifle!\""));
 		return;
 	}
 
@@ -57,7 +57,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert AnimInstance to \"UCharacterAnimation\""));
+		UE_LOG(BaseCharacter, Error, TEXT("Failed to convert AnimInstance to \"UCharacterAnimation!\""));
 		return;
 	}
 
@@ -69,7 +69,7 @@ void ABaseCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(Game, Error, TEXT("No HealthComponent is present in ABaseCharacter!"));
+		UE_LOG(BaseCharacter, Error, TEXT("No HealthComponent is present in ABaseCharacter!"));
 	}
 }
 
