@@ -7,7 +7,8 @@
 #include "BrainComponent.h"
 
  // Ctor that sets default values for AAgent.
-AAgent::AAgent() : TintName("Tint"), Color(FLinearColor(0.0, 0.083584, 1.0, 0.0)) {} // Tick already disabled
+AAgent::AAgent() : TintName("Tint"), Color(FLinearColor(0.0, 0.083584, 1.0, 0.0)), HealthRatioKey("HealthRatio"),
+MaxAmmoKey("MaxAmmo"), CurrentAmmoKey("CurrentAmmo"), ActionStoppedMessage("ActionFinished") {} // Tick already disabled
 
 // Called after loading the level and starting the game; runs before BeginPlay.
 void AAgent::PostLoad()
@@ -42,15 +43,16 @@ void AAgent::UpdateBlackboardHealth(float Ratio)
 	}
 }
 
-// Updates the Ammo value in the AI Blackboard.
+// Updates the Ammo values in the AI Blackboard.
 void AAgent::UpdateBlackboardAmmo(float Current, float Max)
 {
 	if (APawn* AgentPawn = Cast<APawn>(this))
 	{
 		if (AAIController* AIController = Cast<AAIController>(AgentPawn->GetController()))
 		{
-			// Set the correct value for the current ammo value in the AI Blackboard in the AIController
-			AIController->GetBlackboardComponent()->SetValueAsFloat(AmmoKey, Current);
+			// Set the correct value for the current and max ammo values in the AI Blackboard in the AIController
+			AIController->GetBlackboardComponent()->SetValueAsFloat(MaxAmmoKey, Max);
+			AIController->GetBlackboardComponent()->SetValueAsFloat(CurrentAmmoKey, Current);
 		}
 	}
 }

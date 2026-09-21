@@ -49,11 +49,6 @@ void ABaseRifle::ActionStopped()
 	OnActionStopped.Broadcast();
 }
 
-FVector ABaseRifle::GetSource()
-{
-	return SkeletalMesh->GetSocketLocation(ProjectileSpawnSocketName);
-}
-
 void ABaseRifle::ReloadAmmo()
 {
 	CurrentAmmo = MaxAmmo;
@@ -94,4 +89,10 @@ void ABaseRifle::Fire(const FRotator* Direction)
 
 		OnRifleFireDelegate.Broadcast();
 	}
+}
+
+void ABaseRifle::IncreaseMaxAmmo(float Increment)
+{
+	MaxAmmo = FMath::Max(0, MaxAmmo + Increment);
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
 }

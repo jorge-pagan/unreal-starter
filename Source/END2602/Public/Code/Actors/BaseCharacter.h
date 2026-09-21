@@ -39,4 +39,7 @@ public:
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//
 	virtual bool CanPickupHealth() const override;                                                                      // Decides whether or not ABaseCharacter is allowed to use the health pickup.
+	virtual bool CanPickupMaxAmmo() const override;                                                                     // Decides whether or not ABaseCharacter is allowed to use the max ammo pickup.
+
+	virtual void IncreaseMaxAmmo(float Increment) override;                                                             // Increases the max capacity of ABaseRifle.
 };

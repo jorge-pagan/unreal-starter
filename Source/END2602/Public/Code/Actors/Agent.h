@@ -20,7 +20,7 @@ class END2602_API AAgent : public ABaseCharacter, public IEnemyBehaviorsInterfac
 private:
 	void UpdateBlackboardHealth(float Ratio);                                                                           // Updates the Health value in the AI Blackboard.
 
-	UFUNCTION() void UpdateBlackboardAmmo(float Current, float Max);                                                    // Updates the Ammo value in the AI Blackboard.
+	UFUNCTION() void UpdateBlackboardAmmo(float Current, float Max);                                                    // Updates the Ammo values in the AI Blackboard.
 
 protected:
 	// Don't forget to set the WeaponClass to BP_CodeBaseRifle in the editor (and not the ABaseRifle class)
@@ -28,7 +28,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName TintName;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName ActionStoppedMessage;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName HealthRatioKey;
-	UPROPERTY(EditDefaultsOnly, Category = Default) FName AmmoKey;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName MaxAmmoKey;
+	UPROPERTY(EditDefaultsOnly, Category = Default) FName CurrentAmmoKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
 
 	void PostLoad() override;                                                                                           // Called after loading the level and starting the game; runs before BeginPlay.

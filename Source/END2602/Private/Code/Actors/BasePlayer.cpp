@@ -135,3 +135,9 @@ bool ABasePlayer::CanPickupHealth() const
 {
 	return true;
 }
+
+// Decides whether or not ABasePlayer is allowed to use the max ammo pickup.
+bool ABasePlayer::CanPickupMaxAmmo() const
+{
+	return true;
+}

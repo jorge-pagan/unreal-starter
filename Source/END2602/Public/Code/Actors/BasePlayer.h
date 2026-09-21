@@ -54,4 +54,5 @@ public:
 	// IPickupQueriesInterface
 	//----------------------------------------------------------------------//
     virtual bool CanPickupHealth() const override;                                                                      // Decides whether or not ABasePlayer is allowed to use the health pickup.
+	virtual bool CanPickupMaxAmmo() const override;                                                                     // Decides whether or not ABasePlayer is allowed to use the max ammo pickup.
 };

@@ -45,7 +45,7 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnRifleEvent OnRifleFireDelegate;
 	UPROPERTY(BlueprintAssignable, BlueprintCallable) FOnAmmoChanged OnAmmoChanged;
 
-	FVector GetSource();
+	inline FVector GetSource() { return SkeletalMesh->GetSocketLocation(ProjectileSpawnSocketName); }
 
 	inline void OwnerMuerto() { Alive = false; }
 
@@ -54,4 +54,6 @@ public:
 
 	void Fire(const FRotator* Direction = nullptr);
 	UFUNCTION() void ActionStopped();
+
+	void IncreaseMaxAmmo(float Increment);
 };

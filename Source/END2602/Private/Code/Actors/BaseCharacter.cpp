@@ -104,3 +104,15 @@ bool ABaseCharacter::CanPickupHealth() const
 {
 	return false;
 }
+
+// Decides whether or not ABaseCharacter is allowed to use the max ammo pickup.
+bool ABaseCharacter::CanPickupMaxAmmo() const
+{
+	return false;
+}
+
+// Increases the max capacity of ABaseRifle.
+void ABaseCharacter::IncreaseMaxAmmo(float Increment)
+{
+	BaseRifle->IncreaseMaxAmmo(Increment);
+}
