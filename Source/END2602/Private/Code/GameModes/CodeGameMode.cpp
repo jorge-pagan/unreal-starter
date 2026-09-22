@@ -3,7 +3,6 @@
 
 #include "Code/GameModes/CodeGameMode.h"
 #include "Code/Controllers/GamePlayerController.h"
-#include "Code/Actors/BasePlayer.h"
 #include "../END2602.h"
 #include "EngineUtils.h"
 
@@ -36,10 +35,11 @@ void ACodeGameMode::BeginPlay()
 				}
 				else
 				{
-					++NumberOfEnemies;
-					Actor->OnDestroyed.AddDynamic(this, &ACodeGameMode::RemoveEnemy);
+					AddEnemy(Actor);
 				}
 			}
+
+			UE_LOG(CodeGameMode, Warning, TEXT("ACodeGameMode::BeginPlay NumberOfEnemies: %i"), NumberOfEnemies);
 
 			if (TActorIterator<AActor> It(World, PlayerControllerClass); It)
 			{
@@ -82,4 +82,11 @@ void ACodeGameMode::RemovePlayer()
 	ResultsWidgetObject->GetOwningPlayer()->FlushPressedKeys();
 
 	UE_LOG(CodeGameMode, Warning, TEXT("You suck!!!"));
+}
+
+void ACodeGameMode::AddEnemy(AActor* OtherActor)
+{
+	++NumberOfEnemies;
+	OtherActor->OnDestroyed.AddDynamic(this, &ACodeGameMode::RemoveEnemy);
+	UE_LOG(CodeGameMode, Warning, TEXT("ACodeGameMode::BeginPlay NumberOfEnemies: %i"), NumberOfEnemies);
 }

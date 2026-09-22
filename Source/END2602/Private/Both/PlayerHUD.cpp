@@ -106,6 +106,7 @@ void UPlayerHUD::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 		EndPoint = HitResult.Location;
 		DynamicMaterial->SetVectorParameterValue(ColorName, SafeColor);
 	}
+	
 	else
 	{
 		// No hittable objects present in the crosshair, Safe Color

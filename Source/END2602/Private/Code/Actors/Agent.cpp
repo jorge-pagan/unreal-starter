@@ -27,7 +27,8 @@ void AAgent::BeginPlay()
 	BaseRifle->OnActionStopped.AddDynamic(this, &AAgent::HandleActionFinished);
 	BaseRifle->OnAmmoChanged.AddDynamic(this, &AAgent::UpdateBlackboardAmmo);
 
-	AnimInstance->OnDeathEnded.AddDynamic(this, &AActor::K2_DestroyActor); 
+	AnimInstance->OnDeathEnded.AddDynamic(this, &AActor::K2_DestroyActor);
+	GetMesh()->SetVectorParameterValueOnMaterials(TintName, FVector(Color));
 }
 
 // Updates the Health value in the AI Blackboard.

@@ -6,6 +6,8 @@
 
 #include "GameFramework/GameModeBase.h"
 #include "Code/Widgets/ResultsHUD.h"
+#include "Code/Actors/BasePlayer.h"
+#include "Code/Interfaces/WinConditionInterface.h"
 
 #include "CodeGameMode.generated.h"
 
@@ -13,7 +15,7 @@
  * 
  */
 UCLASS()
-class END2602_API ACodeGameMode : public AGameModeBase
+class END2602_API ACodeGameMode : public AGameModeBase, public IWinConditionInterface
 {
 	GENERATED_BODY()
 
@@ -35,4 +37,6 @@ protected:
 
 public:
 	ACodeGameMode();
+
+	virtual void AddEnemy(AActor* OtherActor) override;
 };
