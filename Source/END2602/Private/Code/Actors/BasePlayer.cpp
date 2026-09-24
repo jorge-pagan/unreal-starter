@@ -24,6 +24,8 @@ HUDClass(UPlayerHUD::StaticClass())
 
 	// Camera Setup
 	Camera->SetupAttachment(SpringArm);
+
+	TeamID = 0;
 }
 
 // Called when the game starts or when spawned
@@ -32,13 +34,14 @@ void ABasePlayer::BeginPlay()
 	Super::BeginPlay();
 
 	// Casting to APlayerController to attach the UPlayerHUD and disable/enable input to ABasePlayer
-	if (APlayerController* CastedController = Cast<APlayerController>(GetController()))
+	if (AGamePlayerController* CastedController = Cast<AGamePlayerController>(GetController()))
 	{
 		PlayerController = CastedController;
+		SetGenericTeamId(TeamID);
 	}
 	else
 	{
-		UE_LOG(BasePlayer, Error, TEXT("No PlayerController present in ABasePlayer!"));
+		UE_LOG(BasePlayer, Error, TEXT("PlayerController is not AGamePlayerController or no controller present!"));
 		Destroy();
 	}
 

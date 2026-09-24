@@ -98,7 +98,6 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-
 // Decides whether or not ABaseCharacter is allowed to use the health pickup.
 bool ABaseCharacter::CanPickupHealth() const
 {

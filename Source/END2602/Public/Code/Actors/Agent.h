@@ -6,6 +6,7 @@
 
 #include "Code/Actors/BaseCharacter.h"
 #include "Code/Interfaces/EnemyBehaviors.h"
+#include "Code/Controllers/AgentController.h"
 
 #include "Agent.generated.h"
 
@@ -18,6 +19,8 @@ class END2602_API AAgent : public ABaseCharacter, public IEnemyBehaviorsInterfac
 	GENERATED_BODY()
 
 private:
+	AAgentController* AgentController;
+
 	void UpdateBlackboardHealth(float Ratio);                                                                           // Updates the Health value in the AI Blackboard.
 
 	UFUNCTION() void UpdateBlackboardAmmo(float Current, float Max);                                                    // Updates the Ammo values in the AI Blackboard.
@@ -42,8 +45,10 @@ protected:
 public:
 	AAgent();                                                                                                           // Ctor that sets default values for AAgent.
 
-	UFUNCTION() void HandleActionFinished();                                                                            // Sends a message to the UBTTaskNode to indicate the completion of a certain behavior.
+	virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override;                                            // Changes the TeamID
 
+	UFUNCTION() void HandleActionFinished();                                                                            // Sends a message to the UBTTaskNode to indicate the completion of a certain behavior.
+	
 	//----------------------------------------------------------------------//
 	// IEnemyBehaviorsInterface
 	//----------------------------------------------------------------------//

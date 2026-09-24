@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 
 #include "Code/Actors/BaseCharacter.h"
+#include "Code/Controllers/GamePlayerController.h"
 #include "Both/PlayerHUD.h"
 
 #include "BasePlayer.generated.h"
@@ -20,7 +21,7 @@ class END2602_API ABasePlayer : public ABaseCharacter
 	GENERATED_BODY()
 
 private:
-	APlayerController* PlayerController;
+	AGamePlayerController* PlayerController;
 
 	void InputAxisStrafe(float AxisValue);                                                                              // Allows ABasePlayer to move left or right; strafing.
 	void InputAxisMoveForward(float AxisValue);                                                                         // Allows ABasePlayer to move forwards and backwards.
