@@ -31,7 +31,7 @@ protected:
 	UFUNCTION() virtual void HandleMuerte(float NotUsed);                                                               // Triggers the death animation and disables input for the ABaseCharacter.
 
 public:
-	ABaseCharacter();                                                                                                   // Ctor that sets default values for ABaseCharacter.
+	ABaseCharacter(const FObjectInitializer& ObjectInitializer);                                                                                                   // Ctor that sets default values for ABaseCharacter.
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;                       // Called to bind functionality to the input.
 

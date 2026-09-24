@@ -18,13 +18,16 @@ class END2602_API UHealthComponent : public UActorComponent
 private:
 	UPROPERTY(EditAnywhere, Category = Default) float CurrentHealth = 0.f;
 
-	UFUNCTION() void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-		                          class AController* InstigatedBy, AActor* DamageCauser);
+
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	UFUNCTION() virtual void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+		                          class AController* InstigatedBy, AActor* DamageCauser);
 
+	FORCEINLINE bool IsFullHealth() const { return CurrentHealth / MaxHealth == 1.f; }
+	FORCEINLINE bool IsAlive() const { return CurrentHealth > 0; }
 public:
 	// Sets default values for this component's properties
 	UHealthComponent();

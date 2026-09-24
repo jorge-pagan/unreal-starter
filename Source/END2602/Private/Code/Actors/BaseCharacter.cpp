@@ -5,7 +5,7 @@
 #include "../END2602.h"
 
 // Ctor that sets default values for ABaseCharacter.
-ABaseCharacter::ABaseCharacter() : WeaponClass(ABaseRifle::StaticClass()), WeaponSocketName(TEXT("WeaponSocket"))
+ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer), WeaponClass(ABaseRifle::StaticClass()), WeaponSocketName(TEXT("WeaponSocket"))
 {
 	// Disables ticking
 	PrimaryActorTick.bCanEverTick = false;

@@ -3,11 +3,12 @@
 
 #include "Code/Actors/BasePlayer.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Both/RegenHealthComponent.h"
 #include "Camera/CameraComponent.h"
 #include "../END2602.h"
 
 // Ctor that sets default values for ABasePlayer.
-ABasePlayer::ABasePlayer() : SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
+ABasePlayer::ABasePlayer(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer.SetDefaultSubobjectClass<URegenHealthComponent>(TEXT("HealthComponent"))), SpringArmRelativeLocation(FVector(0.0, 80.0, 90.0)), TargetArmLength(205.f),
 HUDClass(UPlayerHUD::StaticClass())
 {
 	// Tick already disabled

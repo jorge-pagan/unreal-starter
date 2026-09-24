@@ -7,7 +7,7 @@
 #include "BrainComponent.h"
 
  // Ctor that sets default values for AAgent.
-AAgent::AAgent() : TintName("Tint"), Color(FLinearColor(0.0, 0.083584, 1.0, 0.0)) {} // Tick already disabled
+AAgent::AAgent() : Super(FObjectInitializer::Get()), TintName("Tint"), Color(FLinearColor(0.0, 0.083584, 1.0, 0.0)) {} // Tick already disabled
 
 // Called after loading the level and starting the game; runs before BeginPlay.
 void AAgent::PostLoad()

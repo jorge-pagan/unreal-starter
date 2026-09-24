@@ -40,7 +40,7 @@ protected:
 	virtual void BeginPlay() override;                                                                                  // Called when the game starts or when spawned
 
 public:
-	ABasePlayer();                                                                                                      // Ctor that sets default values for ABasePlayer.
+	ABasePlayer(const FObjectInitializer& ObjectInitializer);                                                                                                      // Ctor that sets default values for ABasePlayer.
 	
 	UPROPERTY(EditDefaultsOnly, Category = Default) FOnPlayerLost OnPlayerLost;
 
