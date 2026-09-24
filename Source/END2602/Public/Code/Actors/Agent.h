@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName HealthRatioKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName MaxAmmoKey;
 	UPROPERTY(EditDefaultsOnly, Category = Default) FName CurrentAmmoKey;
-	UPROPERTY(EditDefaultsOnly, Category = Default) FLinearColor Color;
+	UPROPERTY(EditAnywhere, Category = Default) FLinearColor Color;
 
 	void PostLoad() override;                                                                                           // Called after loading the level and starting the game; runs before BeginPlay.
 

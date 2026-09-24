@@ -2,19 +2,14 @@
 
 
 #include "Code/AnimNotify/ReloadEnded.h"
-#include "Code/Interfaces/HandleReloadInterface.h"
+#include "Both/CharacterAnimation.h"
 
 void UReloadEnded::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
 
-	for (TObjectIterator<UObject> It; It; ++It)
+	if (UCharacterAnimation* CA = Cast<UCharacterAnimation>(MeshComp->GetAnimInstance()))
 	{
-		UObject* Actor = *It;
-
-		if (IHandleReloadInterface* I = Cast<IHandleReloadInterface>(Actor))
-		{
-			I->HandleReloadEnded();
-		}
+		CA->HandleReloadEnded();
 	}
 }

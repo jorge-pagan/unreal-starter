@@ -14,17 +14,6 @@ MaxAmmoKey("MaxAmmo"), CurrentAmmoKey("CurrentAmmo"), ActionStoppedMessage("Acti
 	// Tick already disabled
 
 	TeamID = 1;
-
-	if (APawn* AgentPawn = Cast<APawn>(this))
-	{
-		if (AAgentController* AGC = Cast<AAgentController>(AgentPawn->GetController()))
-		{
-			AgentController = AGC;
-			SetGenericTeamId(TeamID);
-		}
-		else UE_LOG(Agent, Error, TEXT("AIController is not AAgentController or no AIController present!"));
-	}
-	else UE_LOG(Agent, Error, TEXT("AAgent is not a Pawn!"));
 }
 
 // Called after loading the level and starting the game; runs before BeginPlay.

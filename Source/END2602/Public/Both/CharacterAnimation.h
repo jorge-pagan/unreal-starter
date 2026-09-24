@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 
 #include "Animation/AnimInstance.h"
-#include "Code/Interfaces/HandleReloadInterface.h"
 
 #include "CharacterAnimation.generated.h"
 
@@ -15,7 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnimationEvent);
  *
  */
 UCLASS()
-class END2602_API UCharacterAnimation : public UAnimInstance, public IHandleReloadInterface
+class END2602_API UCharacterAnimation : public UAnimInstance
 {
 	GENERATED_BODY()
 
@@ -56,10 +55,6 @@ public:
 	UFUNCTION(BlueprintCallable) void HitAnimation();
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent) void MuerteAnimation(float Percent = 0.f);
 	UFUNCTION(BlueprintCallable) void ReloadAnimation();
-
-	//----------------------------------------------------------------------//
-	// IHandleReloadInterface
-	//----------------------------------------------------------------------//
-	void HandleReloadNow() override;
-	void HandleReloadEnded() override;
+	void HandleReloadNow();
+	void HandleReloadEnded();
 };
