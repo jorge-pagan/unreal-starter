@@ -3,6 +3,9 @@
 
 #include "Code/GameModes/CodeGameMode.h"
 #include "Code/Controllers/GamePlayerController.h"
+#include "Code/Interfaces/WinConditionInterface.h"
+#include "Code/Widgets/ResultsHUD.h"
+#include "Code/Actors/BasePlayer.h"
 #include "../END2602.h"
 #include "EngineUtils.h"
 

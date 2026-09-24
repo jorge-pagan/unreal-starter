@@ -2,6 +2,10 @@
 
 
 #include "Code/Widgets/ResultsHUD.h"
+#include "Components/WidgetSwitcher.h"
+#include "Components/VerticalBox.h"
+#include "Code/Instances/CodeGameInstance.h"
+#include "Both/ButtonWithText.h"
 #include "../END2602.h"
 
 void UResultsHUD::NativeConstruct()

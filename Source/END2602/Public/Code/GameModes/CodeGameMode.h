@@ -5,8 +5,6 @@
 #include "CoreMinimal.h"
 
 #include "GameFramework/GameModeBase.h"
-#include "Code/Widgets/ResultsHUD.h"
-#include "Code/Actors/BasePlayer.h"
 #include "Code/Interfaces/WinConditionInterface.h"
 
 #include "CodeGameMode.generated.h"
@@ -20,15 +18,15 @@ class END2602_API ACodeGameMode : public AGameModeBase, public IWinConditionInte
 	GENERATED_BODY()
 
 private:
-	ABasePlayer* CurrentPlayer;
-	UResultsHUD* ResultsWidgetObject;
+	int32 NumberOfEnemies;
+	UPROPERTY() class ABasePlayer* CurrentPlayer;
+	UPROPERTY() class UResultsHUD* ResultsWidgetObject;
 
 	// Checks for the win condition
 	UFUNCTION() void RemoveEnemy(AActor* DestroyedActor);
 
 	UFUNCTION() void RemovePlayer();
 protected:
-	int32 NumberOfEnemies;
 	UPROPERTY(EditDefaultsOnly) EMouseLockMode PlayerLoseMenuMouseLockType = EMouseLockMode::LockAlways;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<UUserWidget> ResultsWidgetClass;
 	UPROPERTY(EditDefaultsOnly) TSubclassOf<AActor> BaseCharacterClass;

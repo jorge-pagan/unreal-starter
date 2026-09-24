@@ -3,6 +3,10 @@
 
 #include "Code/Actors/Spawner.h"
 #include "Code/Actors/Agent.h"
+#include "Code/GameModes/CodeGameMode.h"
+#include "Both/HealthComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Code/Interfaces/WinConditionInterface.h"
 #include "EngineUtils.h"
 
 // Sets default values

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 
 #include "Code/Actors/BasePickup.h"
-#include "Code/Interfaces/PickupQueriesInterface.h"
 
 #include "MaxAmmoPickup.generated.h"
 

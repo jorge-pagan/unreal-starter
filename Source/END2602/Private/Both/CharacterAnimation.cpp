@@ -85,13 +85,3 @@ void UCharacterAnimation::ReloadAnimation()
 {
 	PlaySlotAnimationAsDynamicMontage(ReloadAsset, ActionSlotName);
 }
-
-void UCharacterAnimation::HandleReloadNow()
-{
-	OnReloadNow.Broadcast();
-}
-
-void UCharacterAnimation::HandleReloadEnded()
-{
-	OnReloadEnded.Broadcast();
-}

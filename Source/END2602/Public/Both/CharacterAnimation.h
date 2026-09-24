@@ -55,6 +55,4 @@ public:
 	UFUNCTION(BlueprintCallable) void HitAnimation();
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent) void MuerteAnimation(float Percent = 0.f);
 	UFUNCTION(BlueprintCallable) void ReloadAnimation();
-	void HandleReloadNow();
-	void HandleReloadEnded();
 };

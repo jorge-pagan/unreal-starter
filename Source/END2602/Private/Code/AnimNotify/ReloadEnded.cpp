@@ -10,6 +10,6 @@ void UReloadEnded::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* A
 
 	if (UCharacterAnimation* CA = Cast<UCharacterAnimation>(MeshComp->GetAnimInstance()))
 	{
-		CA->HandleReloadEnded();
+		CA->OnReloadEnded.Broadcast();
 	}
 }
